@@ -49,7 +49,6 @@
       input#valor {
         text-transform: none;
       }
-
       .app {
         width: 100%;
         max-width: 430px;
@@ -86,7 +85,6 @@
       .step-dot.done {
         background: #4ade80;
       }
-
       .app-main {
         flex: 1;
         min-height: 0;
@@ -113,7 +111,6 @@
       .form-card.is-valid {
         border-color: #22c55e;
       }
-
       .field-label {
         display: flex;
         align-items: center;
@@ -132,7 +129,6 @@
         font-weight: 500;
         margin-left: auto;
       }
-
       .field {
         width: 100%;
         min-width: 0;
@@ -173,7 +169,6 @@
         color: #a8b2c4;
         text-transform: none;
       }
-
       .field-wrap {
         position: relative;
         flex: 1;
@@ -311,7 +306,6 @@
       .photo-remove:hover {
         background: #ef4444;
       }
-
       .app-footer {
         flex-shrink: 0;
         padding: 9px 12px 12px;
@@ -350,7 +344,6 @@
         border-radius: 10px;
         background: #c4cad4;
       }
-
       @media (max-height: 700px) {
         .app-header {
           padding: 9px 15px;
@@ -431,7 +424,6 @@
       id="toast-container"
       class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[430px] mx-auto"
     ></div>
-
     <div class="app">
       <header class="app-header">
         <div class="flex items-center gap-3">
@@ -457,7 +449,6 @@
           <div class="step-dot" id="step3"></div>
         </div>
       </header>
-
       <main class="app-main">
         <form id="osForm" class="flex min-h-0 flex-1 flex-col gap-2" novalidate>
           <section class="form-card" id="cardCliente">
@@ -467,8 +458,9 @@
               <span class="field-hint" id="hintCliente">1 de 3</span>
             </div>
             <div class="mb-2">
+              <!-- Removido o asterisco de obrigatório e a tag required -->
               <label for="nome" class="field-label"
-                >Nome do cliente <span class="req">*</span></label
+                >Nome do cliente (Opcional)</label
               >
               <div class="field-wrap">
                 <i class="fa-solid fa-user field-icon"></i>
@@ -477,9 +469,8 @@
                   name="nome"
                   class="field"
                   type="text"
-                  placeholder="Digite o nome"
+                  placeholder="Consumidor"
                   autocomplete="name"
-                  required
                 />
                 <i
                   class="fa-solid fa-circle-check field-status ok"
@@ -521,7 +512,6 @@
               </div>
             </div>
           </section>
-
           <section class="form-card" id="cardServico">
             <div class="mb-2 flex items-center gap-2">
               <i
@@ -591,7 +581,6 @@
               ></textarea>
             </div>
           </section>
-
           <section class="photo-section" id="photoSection">
             <div class="mb-2 flex flex-shrink-0 items-center justify-between">
               <div class="flex items-center gap-2">
@@ -622,7 +611,6 @@
           </section>
         </form>
       </main>
-
       <footer class="app-footer">
         <button
           id="submitButton"
@@ -635,14 +623,12 @@
         <div class="home-indicator"></div>
       </footer>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
       const supabaseUrl = "https://kiiswukzwwoznkgjyaod.supabase.co";
       const supabaseKey = "sb_publishable_WPRvraB-40Fz1RuKbd5bRg_3tGvyAxg";
       const { createClient } = supabase;
       const supabaseClient = createClient(supabaseUrl, supabaseKey);
-
       const MAX_FOTOS = 6;
       const form = document.getElementById("osForm");
       const photoInput = document.getElementById("photoInput");
@@ -657,7 +643,6 @@
       const valor = document.getElementById("valor");
       const observacao = document.getElementById("observacao");
       const submitButton = document.getElementById("submitButton");
-
       let fotos = [];
 
       function mostrarToast(mensagem, tipo = "sucesso") {
@@ -666,10 +651,8 @@
         const isSucesso = tipo === "sucesso";
         const bgColor = isSucesso ? "bg-green-500" : "bg-red-500";
         const icone = isSucesso ? "fa-circle-check" : "fa-circle-exclamation";
-
         toast.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 mb-2 transition-all duration-300 transform -translate-y-10 opacity-0 font-medium text-sm pointer-events-auto w-full max-w-[400px]`;
         toast.innerHTML = `<i class="fa-solid ${icone} text-lg"></i><span>${mensagem}</span>`;
-
         container.appendChild(toast);
         setTimeout(() => {
           toast.classList.remove("-translate-y-10", "opacity-0");
@@ -693,7 +676,6 @@
               const MAX_HEIGHT = 1280;
               let width = img.width;
               let height = img.height;
-
               if (width > height) {
                 if (width > MAX_WIDTH) {
                   height *= MAX_WIDTH / width;
@@ -705,12 +687,10 @@
                   height = MAX_HEIGHT;
                 }
               }
-
               canvas.width = width;
               canvas.height = height;
               const ctx = canvas.getContext("2d");
               ctx.drawImage(img, 0, 0, width, height);
-
               canvas.toBlob(
                 (blob) => {
                   const arquivoComprimido = new File([blob], arquivo.name, {
@@ -735,12 +715,10 @@
           const foto = fotos[i];
           const slot = document.createElement("div");
           slot.className = "photo-slot";
-
           if (foto) {
             const imagem = document.createElement("img");
             imagem.src = foto.url;
             slot.appendChild(imagem);
-
             const remover = document.createElement("button");
             remover.type = "button";
             remover.className = "photo-remove";
@@ -772,22 +750,18 @@
       photoInput.addEventListener("change", async (event) => {
         const selecionadas = Array.from(event.target.files || []);
         const vagas = MAX_FOTOS - fotos.length;
-
         if (selecionadas.length > vagas) {
           mostrarToast(
             `Você pode adicionar mais ${vagas} foto(s). O limite é de ${MAX_FOTOS}.`,
             "erro",
           );
         }
-
         submitButton.innerHTML =
           '<i class="fa-solid fa-spinner fa-spin"></i> OTIMIZANDO FOTOS...';
         submitButton.disabled = true;
-
         const fotosParaAdicionar = selecionadas
           .slice(0, vagas)
           .filter((arq) => arq.type.startsWith("image/"));
-
         for (const arquivoOriginal of fotosParaAdicionar) {
           try {
             const arquivoLeve = await comprimirImagem(arquivoOriginal);
@@ -799,7 +773,6 @@
             console.error("Erro ao comprimir imagem", e);
           }
         }
-
         photoInput.value = "";
         renderFotos();
         validarFotos();
@@ -813,7 +786,6 @@
       // ===== LÓGICA DO TELEFONE COM MÁSCARA E PLACEHOLDER DINÂMICO =====
       function aplicarMascaraTelefone() {
         let numero = telefone.value.replace(/\D/g, "");
-
         if (paisDDI.value === "+55") {
           // Máscara Brasil (10 ou 11 dígitos)
           numero = numero.slice(0, 11);
@@ -867,26 +839,56 @@
         atualizarProgresso();
       });
 
+      // === NOVA LÓGICA: AUTO-PREENCHIMENTO DE SERVIÇO ===
+      servico.addEventListener("change", () => {
+        const tabelaPrecos = {
+          Alinhamento: 50,
+          Solda: 100,
+          Conserto: 150,
+          Escapamento: 200,
+          Mecanica: 200,
+          Reforma: 200,
+        };
+
+        const preco = tabelaPrecos[servico.value];
+
+        if (preco) {
+          quantidade.value = "1";
+
+          // Simula a digitação para aplicar a máscara de R$ corretamente
+          valor.value = (preco * 100).toString();
+          valor.dispatchEvent(new Event("input"));
+
+          // Dispara validações para atualizar os cards
+          validarQuantidade();
+          validarValor();
+        }
+
+        validarServico();
+        atualizarProgresso();
+      });
+
       function validarNome() {
-        const valido = nome.value.trim().length >= 3;
-        nome.classList.toggle("is-invalid", !valido && nome.value.length > 0);
-        nome.classList.toggle("is-valid", valido);
-        document.getElementById("statusNome").style.display = valido
-          ? "block"
-          : "none";
+        const valorNome = nome.value.trim();
+        // Se o nome estiver vazio, é válido, pois vai virar "CONSUMIDOR".
+        // Se tiver algo digitado, precisa ter no mínimo 3 letras.
+        const valido = valorNome.length === 0 || valorNome.length >= 3;
+
+        nome.classList.toggle("is-invalid", !valido && valorNome.length > 0);
+        nome.classList.toggle("is-valid", valorNome.length >= 3);
+        document.getElementById("statusNome").style.display =
+          valorNome.length >= 3 ? "block" : "none";
         return valido;
       }
 
       function validarTelefone() {
         const digitos = telefone.value.replace(/\D/g, "");
         let valido = false;
-
         if (paisDDI.value === "+55") {
           valido = digitos.length === 10 || digitos.length === 11;
         } else {
           valido = digitos.length === 9; // Paraguai
         }
-
         telefone.classList.toggle("is-invalid", !valido && digitos.length > 0);
         telefone.classList.toggle("is-valid", valido);
         document.getElementById("statusTelefone").style.display = valido
@@ -898,9 +900,11 @@
       function validarServico() {
         return servico.value !== "";
       }
+
       function validarQuantidade() {
         return quantidade.value !== "";
       }
+
       function validarValor() {
         const temValor = valor.value.replace(/\D/g, "").length > 0;
         valor.classList.toggle(
@@ -910,6 +914,7 @@
         valor.classList.toggle("is-valid", temValor);
         return temValor;
       }
+
       function validarObservacao() {
         const valido = observacao.value.trim().length >= 3;
         observacao.classList.toggle(
@@ -919,6 +924,7 @@
         observacao.classList.toggle("is-valid", valido);
         return valido;
       }
+
       function validarFotos() {
         const valido = fotos.length > 0;
         photoSection.classList.toggle("has-error", !valido);
@@ -952,14 +958,12 @@
         validarNome();
         atualizarProgresso();
       });
-      servico.addEventListener("change", () => {
-        validarServico();
-        atualizarProgresso();
-      });
+
       quantidade.addEventListener("change", () => {
         validarQuantidade();
         atualizarProgresso();
       });
+
       observacao.addEventListener("input", () => {
         validarObservacao();
         atualizarProgresso();
@@ -981,13 +985,11 @@
           const base64 = await arquivoParaBase64(arquivo);
           fotosBase64.push({ nome: arquivo.name, base64 });
         }
-
         const novaOS = {
           idTemp: Date.now(),
           dados: cadastro,
           fotos: fotosBase64,
         };
-
         let pendentes = JSON.parse(
           localStorage.getItem("@osfacil_pendentes") || "[]",
         );
@@ -1006,7 +1008,6 @@
 
         for (const os of pendentes) {
           if (
-            !os.dados.nome ||
             !os.dados.telefone ||
             !os.dados.valor ||
             !os.dados.observacao ||
@@ -1017,25 +1018,21 @@
             );
             continue;
           }
-
           try {
             let urlsDasFotos = [];
             for (const foto of os.fotos) {
               const res = await fetch(foto.base64);
               const blob = await res.blob();
               const nomeArquivo = `${Date.now()}-${foto.nome.replace(/[^a-zA-Z0-9.]/g, "_")}`;
-
               const { error: uploadError } = await supabaseClient.storage
                 .from("fotos-ordens")
                 .upload(nomeArquivo, blob);
               if (uploadError) throw new Error("Erro upload");
-
               const { data: urlData } = supabaseClient.storage
                 .from("fotos-ordens")
                 .getPublicUrl(nomeArquivo);
               urlsDasFotos.push(urlData.publicUrl);
             }
-
             const cadastroFinal = { ...os.dados, fotos_urls: urlsDasFotos };
             const { error } = await supabaseClient
               .from("ordens_servico")
@@ -1046,7 +1043,6 @@
             restantes.push(os);
           }
         }
-
         localStorage.setItem("@osfacil_pendentes", JSON.stringify(restantes));
 
         if (restantes.length === 0 && pendentes.length > 0) {
@@ -1057,7 +1053,6 @@
       /* ========== ENVIO DO FORMULÁRIO ========== */
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
-
         const okNome = validarNome();
         const okTelefone = validarTelefone();
         const okServico = validarServico();
@@ -1088,7 +1083,6 @@
         submitButton.disabled = true;
         submitButton.innerHTML =
           '<i class="fa-solid fa-spinner fa-spin"></i> PROCESSANDO...';
-
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
@@ -1096,17 +1090,25 @@
         // Junta o DDI + Telefone formatado. Ex: "+55 (67) 98765-4321"
         const telefoneCompleto = `${paisDDI.value} ${telefone.value.trim()}`;
 
+        // === REGRA DO NOME (CONSUMIDOR E MAIÚSCULO) ===
+        let nomeFinal = nome.value.trim();
+        if (nomeFinal === "") {
+          nomeFinal = "CONSUMIDOR";
+        } else {
+          nomeFinal = nomeFinal.toUpperCase();
+        }
+
+        // === SALVANDO TUDO EM MAIÚSCULO ===
         const cadastro = {
-          nome: nome.value.trim(),
+          nome: nomeFinal,
           telefone: telefoneCompleto,
-          servico: servico.value,
+          servico: servico.value.toUpperCase(),
           quantidade: parseInt(quantidade.value),
           valor: valorNumerico,
-          observacao: observacao.value.trim(),
+          observacao: observacao.value.trim().toUpperCase(),
         };
 
         const arquivosFotos = fotos.map((f) => f.arquivo);
-
         await salvarOSOffline(cadastro, arquivosFotos);
 
         form.reset();
