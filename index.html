@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
     <meta name="theme-color" content="#172033" />
     <title>OS Fácil - Pré-Cadastro</title>
@@ -49,9 +49,10 @@
       input#valor {
         text-transform: none;
       }
+
       .app {
         width: 100%;
-        max-width: 430px;
+        max-width: 600px;
         height: 100%;
         height: 100dvh;
         margin: 0 auto;
@@ -59,12 +60,15 @@
         flex-direction: column;
         overflow: hidden;
         background: #f3f5f9;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
       }
+
       .app-header {
         flex-shrink: 0;
         background: #172033;
         color: white;
         padding: 13px 18px;
+        border-bottom: 1px solid #2a364f;
       }
       .header-step {
         display: flex;
@@ -85,6 +89,7 @@
       .step-dot.done {
         background: #4ade80;
       }
+
       .app-main {
         flex: 1;
         min-height: 0;
@@ -92,8 +97,9 @@
         flex-direction: column;
         gap: 8px;
         padding: 10px 12px;
-        overflow: hidden;
+        overflow-y: auto;
       }
+
       .form-card {
         flex-shrink: 0;
         padding: 10px;
@@ -111,6 +117,7 @@
       .form-card.is-valid {
         border-color: #22c55e;
       }
+
       .field-label {
         display: flex;
         align-items: center;
@@ -129,6 +136,7 @@
         font-weight: 500;
         margin-left: auto;
       }
+
       .field {
         width: 100%;
         min-width: 0;
@@ -152,9 +160,6 @@
         border-color: #ef4444;
         background: #fef2f2;
       }
-      .field.is-invalid:focus {
-        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
-      }
       .field.is-valid {
         border-color: #86efac;
         background: #f0fdf4;
@@ -169,6 +174,7 @@
         color: #a8b2c4;
         text-transform: none;
       }
+
       .field-wrap {
         position: relative;
         flex: 1;
@@ -204,7 +210,6 @@
         color: #ef4444;
       }
 
-      /* Ajuste para o Select do DDI */
       select#paisDDI {
         width: 95px;
         padding: 0 5px;
@@ -219,8 +224,7 @@
       }
 
       .photo-section {
-        flex: 1;
-        min-height: 0;
+        flex: none;
         display: flex;
         flex-direction: column;
         padding: 10px;
@@ -233,19 +237,15 @@
         border-color: #ef4444;
         box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
       }
-
       .photo-grid {
-        flex: 1;
-        min-height: 0;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: repeat(2, minmax(0, 1fr));
-        gap: 7px;
+        gap: 8px;
       }
       .photo-slot {
         position: relative;
-        min-width: 0;
-        min-height: 0;
+        width: 100%;
+        aspect-ratio: 1 / 1;
         overflow: hidden;
         border: 1px dashed #c7cfdd;
         border-radius: 9px;
@@ -264,6 +264,7 @@
         display: block;
         object-fit: cover;
       }
+
       .photo-add {
         width: 100%;
         height: 100%;
@@ -286,6 +287,7 @@
       .photo-add:hover i {
         transform: scale(1.15);
       }
+
       .photo-remove {
         position: absolute;
         top: 4px;
@@ -306,10 +308,12 @@
       .photo-remove:hover {
         background: #ef4444;
       }
+
       .app-footer {
         flex-shrink: 0;
         padding: 9px 12px 12px;
         background: #f3f5f9;
+        border-top: 1px solid #e2e8f0;
       }
       .submit-button {
         width: 100%;
@@ -344,6 +348,34 @@
         border-radius: 10px;
         background: #c4cad4;
       }
+
+      #modalPesquisa > div {
+        width: 100%;
+        max-width: 500px;
+        height: 85dvh;
+      }
+
+      @media (min-width: 768px) {
+        .field {
+          height: 44px;
+          font-size: 13px;
+        }
+        textarea.field {
+          height: 65px;
+          min-height: 65px;
+          font-size: 13px;
+        }
+        .photo-add span {
+          font-size: 12px;
+        }
+        .photo-add i {
+          font-size: 24px;
+        }
+        .field-label {
+          font-size: 12px;
+        }
+      }
+
       @media (max-height: 700px) {
         .app-header {
           padding: 9px 15px;
@@ -380,50 +412,122 @@
           font-size: 10px;
         }
       }
-      @media (max-height: 570px) {
-        .app-header {
-          padding: 6px 12px;
-        }
-        .app-main {
-          gap: 4px;
-          padding: 5px 8px;
-        }
-        .form-card,
-        .photo-section {
-          padding: 6px;
-        }
-        .field-label {
-          margin-bottom: 2px;
-          font-size: 10px;
-        }
-        .field {
-          height: 30px;
-          font-size: 11px;
-          padding: 0 6px;
-        }
-        textarea.field {
-          height: 34px;
-          min-height: 34px;
-          padding: 6px;
-        }
-        .submit-button {
-          height: 36px;
-        }
-        .photo-add {
-          gap: 3px;
-          font-size: 9px;
-        }
-        .photo-add i {
-          font-size: 16px;
-        }
-      }
     </style>
   </head>
   <body>
     <div
       id="toast-container"
-      class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[430px] mx-auto"
+      class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[500px] mx-auto"
     ></div>
+
+    <!-- MODAL DE PESQUISA -->
+    <div
+      id="modalPesquisa"
+      class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3"
+    >
+      <div
+        class="bg-white rounded-2xl flex flex-col overflow-hidden shadow-2xl"
+      >
+        <div
+          class="bg-[#172033] text-white p-4 flex items-center justify-between flex-shrink-0"
+        >
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-magnifying-glass text-indigo-400"></i>
+            <h2 class="text-sm font-bold">Pesquisar Ordem de Serviço</h2>
+          </div>
+          <button
+            type="button"
+            onclick="fecharModalPesquisa()"
+            class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/20 transition-colors"
+          >
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <div class="p-3 bg-slate-100 border-b border-slate-200 flex-shrink-0">
+          <div class="relative">
+            <i
+              class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"
+            ></i>
+            <input
+              id="inputBusca"
+              type="text"
+              class="field pl-8 uppercase"
+              placeholder="Digite o nome ou ID/nº do serviço..."
+              oninput="executarBusca()"
+            />
+          </div>
+        </div>
+
+        <div
+          id="listaResultados"
+          class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 bg-slate-50"
+        >
+          <div class="text-center py-10 text-slate-400 text-xs">
+            <i class="fa-solid fa-clipboard text-2xl mb-2 text-slate-300"></i>
+            <p>Digite algo para pesquisar os serviços salvos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL VISUALIZADOR DE IMAGENS COM NAVEGAÇÃO -->
+    <div
+      id="modalImagens"
+      class="fixed inset-0 z-[60] bg-black/95 hidden flex flex-col justify-between p-4"
+    >
+      <!-- Cabeçalho do Modal -->
+      <div class="flex justify-between items-center text-white z-10 relative">
+        <span
+          id="contadorFotoModal"
+          class="text-sm font-semibold bg-white/10 px-3 py-1 rounded-full"
+          >1/1</span
+        >
+        <button
+          type="button"
+          onclick="fecharModalImagens()"
+          class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition"
+        >
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Área da Imagem (com Setas) -->
+      <div
+        class="flex-1 flex items-center justify-between relative py-4 overflow-hidden"
+        id="areaImagem"
+      >
+        <!-- Seta Esquerda -->
+        <button
+          onclick="navegarImagem(-1)"
+          id="btnPrev"
+          class="absolute left-2 md:left-10 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition hidden"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <img
+          id="imagemAmpliada"
+          src=""
+          class="max-w-full max-h-full object-contain rounded-lg shadow-2xl mx-auto transition-opacity duration-200"
+          alt="Foto Ampliada"
+        />
+
+        <!-- Seta Direita -->
+        <button
+          onclick="navegarImagem(1)"
+          id="btnNext"
+          class="absolute right-2 md:right-10 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition hidden"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="text-center text-slate-400 text-xs py-2 z-10 relative">
+        Deslize para os lados ou use as setas
+      </div>
+    </div>
+
     <div class="app">
       <header class="app-header">
         <div class="flex items-center gap-3">
@@ -438,9 +542,15 @@
               Pré-cadastro de serviço
             </p>
           </div>
-          <div class="ml-auto text-[10px] text-slate-300">
-            <i class="fa-solid fa-bolt mr-1 text-yellow-400"></i> Rápido e
-            simples
+          <div class="ml-auto flex items-center gap-2">
+            <button
+              type="button"
+              onclick="abrirModalPesquisa()"
+              class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-1.5 px-3 rounded-lg shadow transition-colors"
+            >
+              <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+              <span class="hidden sm:inline">Pesquisar</span>
+            </button>
           </div>
         </div>
         <div class="header-step">
@@ -449,6 +559,7 @@
           <div class="step-dot" id="step3"></div>
         </div>
       </header>
+
       <main class="app-main">
         <form id="osForm" class="flex min-h-0 flex-1 flex-col gap-2" novalidate>
           <section class="form-card" id="cardCliente">
@@ -458,7 +569,6 @@
               <span class="field-hint" id="hintCliente">1 de 3</span>
             </div>
             <div class="mb-2">
-              <!-- Removido o asterisco de obrigatório e a tag required -->
               <label for="nome" class="field-label"
                 >Nome do cliente (Opcional)</label
               >
@@ -484,13 +594,10 @@
                 >Telefone <span class="req">*</span></label
               >
               <div class="flex gap-2">
-                <!-- SELETOR DE DDI -->
                 <select id="paisDDI" class="field">
                   <option value="+55" selected>🇧🇷 +55</option>
                   <option value="+595">🇵🇾 +595</option>
                 </select>
-
-                <!-- INPUT DO TELEFONE -->
                 <div class="field-wrap">
                   <i class="fa-solid fa-phone field-icon"></i>
                   <input
@@ -512,6 +619,7 @@
               </div>
             </div>
           </section>
+
           <section class="form-card" id="cardServico">
             <div class="mb-2 flex items-center gap-2">
               <i
@@ -581,6 +689,7 @@
               ></textarea>
             </div>
           </section>
+
           <section class="photo-section" id="photoSection">
             <div class="mb-2 flex flex-shrink-0 items-center justify-between">
               <div class="flex items-center gap-2">
@@ -611,6 +720,7 @@
           </section>
         </form>
       </main>
+
       <footer class="app-footer">
         <button
           id="submitButton"
@@ -623,6 +733,7 @@
         <div class="home-indicator"></div>
       </footer>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
       const supabaseUrl = "https://kiiswukzwwoznkgjyaod.supabase.co";
@@ -644,6 +755,10 @@
       const observacao = document.getElementById("observacao");
       const submitButton = document.getElementById("submitButton");
       let fotos = [];
+
+      // Variáveis para controlar o Carrossel de Imagens
+      let galeriaAtual = [];
+      let indexFotoAtual = 0;
 
       function mostrarToast(mensagem, tipo = "sucesso") {
         const container = document.getElementById("toast-container");
@@ -777,17 +892,14 @@
         renderFotos();
         validarFotos();
         atualizarProgresso();
-
         submitButton.innerHTML =
           '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
         submitButton.disabled = false;
       });
 
-      // ===== LÓGICA DO TELEFONE COM MÁSCARA E PLACEHOLDER DINÂMICO =====
       function aplicarMascaraTelefone() {
         let numero = telefone.value.replace(/\D/g, "");
         if (paisDDI.value === "+55") {
-          // Máscara Brasil (10 ou 11 dígitos)
           numero = numero.slice(0, 11);
           if (numero.length > 10) {
             numero = numero.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
@@ -799,7 +911,6 @@
             numero = numero.replace(/^(\d*)/, "($1");
           }
         } else {
-          // Máscara Paraguai (9 dígitos)
           numero = numero.slice(0, 9);
           if (numero.length > 6) {
             numero = numero.replace(/^(\d{3})(\d{3})(\d{0,3})$/, "($1) $2-$3");
@@ -809,7 +920,6 @@
             numero = numero.replace(/^(\d*)/, "($1");
           }
         }
-
         telefone.value = numero;
         validarTelefone();
         atualizarProgresso();
@@ -817,14 +927,10 @@
 
       telefone.addEventListener("input", aplicarMascaraTelefone);
 
-      // Quando muda o país, limpa o campo, muda o placeholder e re-valida
       paisDDI.addEventListener("change", () => {
-        telefone.value = ""; // Limpa o telefone ao trocar de país
-        if (paisDDI.value === "+55") {
-          telefone.placeholder = "(00) 00000-0000";
-        } else {
-          telefone.placeholder = "(000) 000-000";
-        }
+        telefone.value = "";
+        telefone.placeholder =
+          paisDDI.value === "+55" ? "(00) 00000-0000" : "(000) 000-000";
         aplicarMascaraTelefone();
       });
 
@@ -839,7 +945,6 @@
         atualizarProgresso();
       });
 
-      // === NOVA LÓGICA: AUTO-PREENCHIMENTO DE SERVIÇO ===
       servico.addEventListener("change", () => {
         const tabelaPrecos = {
           Alinhamento: 50,
@@ -849,31 +954,21 @@
           Mecanica: 200,
           Reforma: 200,
         };
-
         const preco = tabelaPrecos[servico.value];
-
         if (preco) {
           quantidade.value = "1";
-
-          // Simula a digitação para aplicar a máscara de R$ corretamente
           valor.value = (preco * 100).toString();
           valor.dispatchEvent(new Event("input"));
-
-          // Dispara validações para atualizar os cards
           validarQuantidade();
           validarValor();
         }
-
         validarServico();
         atualizarProgresso();
       });
 
       function validarNome() {
         const valorNome = nome.value.trim();
-        // Se o nome estiver vazio, é válido, pois vai virar "CONSUMIDOR".
-        // Se tiver algo digitado, precisa ter no mínimo 3 letras.
         const valido = valorNome.length === 0 || valorNome.length >= 3;
-
         nome.classList.toggle("is-invalid", !valido && valorNome.length > 0);
         nome.classList.toggle("is-valid", valorNome.length >= 3);
         document.getElementById("statusNome").style.display =
@@ -883,12 +978,10 @@
 
       function validarTelefone() {
         const digitos = telefone.value.replace(/\D/g, "");
-        let valido = false;
-        if (paisDDI.value === "+55") {
-          valido = digitos.length === 10 || digitos.length === 11;
-        } else {
-          valido = digitos.length === 9; // Paraguai
-        }
+        let valido =
+          paisDDI.value === "+55"
+            ? digitos.length === 10 || digitos.length === 11
+            : digitos.length === 9;
         telefone.classList.toggle("is-invalid", !valido && digitos.length > 0);
         telefone.classList.toggle("is-valid", valido);
         document.getElementById("statusTelefone").style.display = valido
@@ -900,11 +993,9 @@
       function validarServico() {
         return servico.value !== "";
       }
-
       function validarQuantidade() {
         return quantidade.value !== "";
       }
-
       function validarValor() {
         const temValor = valor.value.replace(/\D/g, "").length > 0;
         valor.classList.toggle(
@@ -914,7 +1005,6 @@
         valor.classList.toggle("is-valid", temValor);
         return temValor;
       }
-
       function validarObservacao() {
         const valido = observacao.value.trim().length >= 3;
         observacao.classList.toggle(
@@ -924,7 +1014,6 @@
         observacao.classList.toggle("is-valid", valido);
         return valido;
       }
-
       function validarFotos() {
         const valido = fotos.length > 0;
         photoSection.classList.toggle("has-error", !valido);
@@ -939,17 +1028,14 @@
           validarValor() &&
           validarObservacao();
         const c3 = validarFotos();
-
         document.getElementById("step1").classList.toggle("done", c1);
         document.getElementById("step2").classList.toggle("done", c2);
         document.getElementById("step3").classList.toggle("done", c3);
-
         document.getElementById("step1").classList.toggle("active", !c1);
         document.getElementById("step2").classList.toggle("active", c1 && !c2);
         document
           .getElementById("step3")
           .classList.toggle("active", c1 && c2 && !c3);
-
         document.getElementById("cardCliente").classList.toggle("is-valid", c1);
         document.getElementById("cardServico").classList.toggle("is-valid", c2);
       }
@@ -958,18 +1044,15 @@
         validarNome();
         atualizarProgresso();
       });
-
       quantidade.addEventListener("change", () => {
         validarQuantidade();
         atualizarProgresso();
       });
-
       observacao.addEventListener("input", () => {
         validarObservacao();
         atualizarProgresso();
       });
 
-      /* ========== SISTEMA OFFLINE ========== */
       function arquivoParaBase64(arquivo) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -1003,7 +1086,6 @@
         );
         if (pendentes.length === 0) return;
         if (!navigator.onLine) return;
-
         const restantes = [];
 
         for (const os of pendentes) {
@@ -1044,13 +1126,11 @@
           }
         }
         localStorage.setItem("@osfacil_pendentes", JSON.stringify(restantes));
-
         if (restantes.length === 0 && pendentes.length > 0) {
           mostrarToast("Dados pendentes sincronizados!", "sucesso");
         }
       }
 
-      /* ========== ENVIO DO FORMULÁRIO ========== */
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const okNome = validarNome();
@@ -1075,7 +1155,6 @@
           if (!okObservacao)
             msgErro = "Por favor, preencha a descrição do serviço.";
           if (!okFotos) msgErro = "Por favor, adicione pelo menos 1 foto.";
-
           mostrarToast(msgErro, "erro");
           return;
         }
@@ -1086,19 +1165,12 @@
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
-
-        // Junta o DDI + Telefone formatado. Ex: "+55 (67) 98765-4321"
         const telefoneCompleto = `${paisDDI.value} ${telefone.value.trim()}`;
+        let nomeFinal =
+          nome.value.trim() === ""
+            ? "CONSUMIDOR"
+            : nome.value.trim().toUpperCase();
 
-        // === REGRA DO NOME (CONSUMIDOR E MAIÚSCULO) ===
-        let nomeFinal = nome.value.trim();
-        if (nomeFinal === "") {
-          nomeFinal = "CONSUMIDOR";
-        } else {
-          nomeFinal = nomeFinal.toUpperCase();
-        }
-
-        // === SALVANDO TUDO EM MAIÚSCULO ===
         const cadastro = {
           nome: nomeFinal,
           telefone: telefoneCompleto,
@@ -1113,7 +1185,7 @@
 
         form.reset();
         paisDDI.value = "+55";
-        telefone.placeholder = "(00) 00000-0000"; // Volta o placeholder para o padrão
+        telefone.placeholder = "(00) 00000-0000";
         valor.value = "";
         fotos.forEach((foto) => URL.revokeObjectURL(foto.url));
         fotos = [];
@@ -1125,7 +1197,6 @@
           submitButton.innerHTML =
             '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
           await sincronizarPendentes();
-
           let pendentes = JSON.parse(
             localStorage.getItem("@osfacil_pendentes") || "[]",
           );
@@ -1148,6 +1219,214 @@
         submitButton.innerHTML =
           '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
       });
+
+      // ==========================================
+      // LÓGICA DO MODAL DE PESQUISA E VISUALIZAÇÃO
+      // ==========================================
+      function abrirModalPesquisa() {
+        document.getElementById("modalPesquisa").classList.remove("hidden");
+        document.getElementById("inputBusca").focus();
+        executarBusca();
+      }
+
+      function fecharModalPesquisa() {
+        document.getElementById("modalPesquisa").classList.add("hidden");
+      }
+
+      let timeoutBusca = null;
+
+      async function executarBusca() {
+        clearTimeout(timeoutBusca);
+
+        const termo = document
+          .getElementById("inputBusca")
+          .value.trim()
+          .toUpperCase();
+        const listaResultados = document.getElementById("listaResultados");
+
+        if (!termo) {
+          listaResultados.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs"><i class="fa-solid fa-clipboard text-2xl mb-2 text-slate-300"></i><p>Digite algo para pesquisar os serviços salvos.</p></div>`;
+          return;
+        }
+
+        listaResultados.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-lg mb-2"></i><p>Buscando ordens...</p></div>`;
+
+        timeoutBusca = setTimeout(async () => {
+          let ordens = [];
+
+          if (navigator.onLine) {
+            try {
+              let query = supabaseClient
+                .from("ordens_servico")
+                .select("*")
+                .order("id", { ascending: false })
+                .limit(20);
+
+              if (!isNaN(termo)) {
+                query = query.eq("id", parseInt(termo));
+              } else {
+                query = query.ilike("nome", `%${termo}%`);
+              }
+
+              const { data, error } = await query;
+              if (!error && data) {
+                ordens = data.map((item) => ({
+                  id: item.id || "Nuvem",
+                  dados: item,
+                  fotosUrls: item.fotos_urls || [],
+                }));
+              }
+            } catch (e) {
+              console.error("Erro ao buscar no Supabase", e);
+            }
+          }
+
+          const pendentes = JSON.parse(
+            localStorage.getItem("@osfacil_pendentes") || "[]",
+          );
+          pendentes.forEach((p) => {
+            const matchNome = p.dados.nome && p.dados.nome.includes(termo);
+            const matchId = p.idTemp.toString().includes(termo);
+            if (matchNome || matchId) {
+              ordens.push({
+                id: `Local #${p.idTemp}`,
+                dados: p.dados,
+                fotosUrls: p.fotos.map((f) => f.base64),
+              });
+            }
+          });
+
+          if (ordens.length === 0) {
+            listaResultados.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs"><i class="fa-solid fa-face-frown text-2xl mb-2 text-slate-300"></i><p>Nenhuma ordem de serviço encontrada.</p></div>`;
+            return;
+          }
+
+          listaResultados.innerHTML = "";
+          ordens.forEach((os) => {
+            const d = os.dados;
+            const card = document.createElement("div");
+            card.className =
+              "bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex flex-col gap-2";
+
+            let fotosHtml = "";
+            if (os.fotosUrls && os.fotosUrls.length > 0) {
+              fotosHtml = `<div class="flex gap-1.5 overflow-x-auto py-1">`;
+              // Passando o array inteiro de fotos para a função para navegar entre elas
+              const fotosArrayString = JSON.stringify(os.fotosUrls).replace(
+                /"/g,
+                "&quot;",
+              );
+              os.fotosUrls.forEach((url, idx) => {
+                fotosHtml += `<img src="${url}" onclick="abrirModalImagens(${fotosArrayString}, ${idx})" class="w-14 h-14 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-80 flex-shrink-0" />`;
+              });
+              fotosHtml += `</div>`;
+            } else {
+              fotosHtml = `<span class="text-[10px] text-slate-400 italic">Sem fotos registradas.</span>`;
+            }
+
+            card.innerHTML = `
+              <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">ID: ${os.id}</span>
+                <span class="text-[11px] font-bold text-slate-800">${d.servico} (Qtd: ${d.quantidade})</span>
+              </div>
+              <div class="text-[11px] text-slate-600 flex flex-col gap-0.5">
+                <div><strong>Cliente:</strong> ${d.nome}</div>
+                <div><strong>Telefone:</strong> ${d.telefone}</div>
+                <div><strong>Valor:</strong> R$ ${Number(d.valor).toFixed(2).replace(".", ",")}</div>
+                <div><strong>Obs:</strong> ${d.observacao}</div>
+              </div>
+              <div class="mt-1">
+                <span class="text-[10px] font-bold text-slate-500 block mb-1">Imagens do Serviço:</span>
+                ${fotosHtml}
+              </div>
+            `;
+            listaResultados.appendChild(card);
+          });
+        }, 500);
+      }
+
+      // ==========================================
+      // NOVA LÓGICA DO CARROSSEL DE IMAGENS
+      // ==========================================
+      function abrirModalImagens(arrayFotos, indexInicial) {
+        galeriaAtual = arrayFotos;
+        indexFotoAtual = indexInicial;
+
+        document.getElementById("modalImagens").classList.remove("hidden");
+        atualizarCarrossel();
+      }
+
+      function fecharModalImagens() {
+        document.getElementById("modalImagens").classList.add("hidden");
+      }
+
+      function navegarImagem(direcao) {
+        indexFotoAtual += direcao;
+
+        // Se passar do limite, volta para o começo (loop)
+        if (indexFotoAtual >= galeriaAtual.length) indexFotoAtual = 0;
+        if (indexFotoAtual < 0) indexFotoAtual = galeriaAtual.length - 1;
+
+        atualizarCarrossel();
+      }
+
+      function atualizarCarrossel() {
+        const img = document.getElementById("imagemAmpliada");
+        const contador = document.getElementById("contadorFotoModal");
+        const btnPrev = document.getElementById("btnPrev");
+        const btnNext = document.getElementById("btnNext");
+
+        // Efeito de fade ao trocar de imagem
+        img.style.opacity = 0;
+
+        setTimeout(() => {
+          img.src = galeriaAtual[indexFotoAtual];
+          contador.textContent = `${indexFotoAtual + 1} / ${galeriaAtual.length}`;
+          img.style.opacity = 1;
+        }, 150);
+
+        // Mostra as setas apenas se houver mais de 1 foto
+        if (galeriaAtual.length > 1) {
+          btnPrev.classList.remove("hidden");
+          btnNext.classList.remove("hidden");
+        } else {
+          btnPrev.classList.add("hidden");
+          btnNext.classList.add("hidden");
+        }
+      }
+
+      // Lógica de Swipe (deslizar o dedo) para mudar de foto
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const areaImagem = document.getElementById("areaImagem");
+
+      areaImagem.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        { passive: true },
+      );
+
+      areaImagem.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          processarSwipe();
+        },
+        { passive: true },
+      );
+
+      function processarSwipe() {
+        const limite = 50; // Distância mínima para considerar um swipe
+        if (touchEndX < touchStartX - limite) {
+          navegarImagem(1); // Deslizou para a esquerda (próxima)
+        }
+        if (touchEndX > touchStartX + limite) {
+          navegarImagem(-1); // Deslizou para a direita (anterior)
+        }
+      }
+      // ==========================================
 
       setInterval(sincronizarPendentes, 15000);
       window.addEventListener("online", () => {
