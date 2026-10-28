@@ -106,7 +106,9 @@
         border: 1px solid #e6eaf0;
         border-radius: 12px;
         background: white;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
       .form-card.has-error {
         border-color: #ef4444;
@@ -146,7 +148,9 @@
         color: #172033;
         font-size: 14px;
         outline: none;
-        transition: border-color 0.15s, box-shadow 0.15s;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
         caret-color: #38bdf8;
       }
       .field:focus {
@@ -222,7 +226,9 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: border-color 0.15s, background 0.15s;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
       }
       .btn-ddi:active {
         background: #f1f5f9;
@@ -244,8 +250,8 @@
         position: relative;
       }
       .fake-select::after {
-        content: '\f107';
-        font-family: 'Font Awesome 6 Free';
+        content: "\f107";
+        font-family: "Font Awesome 6 Free";
         font-weight: 900;
         position: absolute;
         right: 12px;
@@ -288,7 +294,9 @@
         border: 1px dashed #c7cfdd;
         border-radius: 9px;
         background: #f7f9fc;
-        transition: border-color 0.2s, background 0.2s;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
       }
       .photo-slot:hover {
         border-color: #435edb;
@@ -365,7 +373,9 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: background 0.15s, transform 0.1s;
+        transition:
+          background 0.15s,
+          transform 0.1s;
       }
       .submit-button:active {
         background: #334bc0;
@@ -386,7 +396,9 @@
       }
 
       @media (min-width: 768px) {
-        .field, .fake-select, .btn-ddi {
+        .field,
+        .fake-select,
+        .btn-ddi {
           height: 48px;
           font-size: 15px;
         }
@@ -411,7 +423,9 @@
         .photo-section {
           padding: 10px;
         }
-        .field, .fake-select, .btn-ddi {
+        .field,
+        .fake-select,
+        .btn-ddi {
           height: 38px;
           font-size: 13px;
         }
@@ -498,17 +512,24 @@
       }
 
       @media (prefers-color-scheme: dark) {
-        body, .app, .app-main, .app-footer {
+        body,
+        .app,
+        .app-main,
+        .app-footer {
           background-color: #0b0f17 !important;
         }
         .app-footer {
           border-top-color: #1e293b !important;
         }
-        .form-card, .photo-section, .modal-box {
+        .form-card,
+        .photo-section,
+        .modal-box {
           background-color: #1e293b !important;
           border-color: #334155 !important;
         }
-        .field, .fake-select, .btn-ddi {
+        .field,
+        .fake-select,
+        .btn-ddi {
           background-color: #0f172a !important;
           color: #ffffff !important;
           border-color: #475569 !important;
@@ -523,7 +544,8 @@
         .field-wrap .field-icon {
           color: #64748b !important;
         }
-        .field-label, .card-body h2 {
+        .field-label,
+        .card-body h2 {
           color: #e2e8f0 !important;
         }
         .field-hint {
@@ -543,10 +565,12 @@
           background-color: #1e293b !important;
           color: #f8fafc !important;
         }
-        .bg-slate-50, .bg-slate-100 {
+        .bg-slate-50,
+        .bg-slate-100 {
           background-color: #0f172a !important;
         }
-        .text-slate-600, .text-slate-800 {
+        .text-slate-600,
+        .text-slate-800 {
           color: #cbd5e1 !important;
         }
         .modal-header {
@@ -575,11 +599,25 @@
     ></div>
 
     <!-- MODAL CUSTOMIZADO DE OPÇÕES (SERVIÇO, QUANTIDADE E DDI) -->
-    <div id="customModal" class="modal-custom" onclick="fecharModalOpcoes(event)">
+    <div
+      id="customModal"
+      class="modal-custom"
+      onclick="fecharModalOpcoes(event)"
+    >
       <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-header">
           <span id="modalTitle">Selecione</span>
-          <button onclick="fecharModalOpcoes()" style="background:none; border:none; font-size:20px; color:#94a3b8;"><i class="fa-solid fa-xmark"></i></button>
+          <button
+            onclick="fecharModalOpcoes()"
+            style="
+              background: none;
+              border: none;
+              font-size: 20px;
+              color: #94a3b8;
+            "
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
         <div id="modalList" class="modal-list"></div>
       </div>
@@ -759,10 +797,15 @@
               <div class="flex gap-2">
                 <!-- BOTÃO DE DDI SUBSTITUINDO O SELECT -->
                 <input type="hidden" id="paisDDI" value="+55" />
-                <button type="button" id="btnDDI" class="btn-ddi" onclick="alternarDDI()">
+                <button
+                  type="button"
+                  id="btnDDI"
+                  class="btn-ddi"
+                  onclick="alternarDDI()"
+                >
                   🇧🇷 +55
                 </button>
-                
+
                 <div class="field-wrap">
                   <i class="fa-solid fa-phone field-icon"></i>
                   <input
@@ -798,14 +841,31 @@
                   >Serviço <span class="req">*</span></label
                 >
                 <input type="hidden" id="servico" name="servico" required />
-                <input type="hidden" id="quantidade" name="quantidade" required />
-                <div id="fakeServico" class="fake-select" onclick="abrirModalOpcoes('servico')">Selec.</div>
+                <input
+                  type="hidden"
+                  id="quantidade"
+                  name="quantidade"
+                  required
+                />
+                <div
+                  id="fakeServico"
+                  class="fake-select"
+                  onclick="abrirModalOpcoes('servico')"
+                >
+                  Selec.
+                </div>
               </div>
               <div>
                 <label for="quantidadeFake" class="field-label"
                   >Qtd <span class="req">*</span></label
                 >
-                <div id="fakeQuantidadeVisivel" class="fake-select" onclick="abrirModalOpcoes('quantidade')">0</div>
+                <div
+                  id="fakeQuantidadeVisivel"
+                  class="fake-select"
+                  onclick="abrirModalOpcoes('quantidade')"
+                >
+                  0
+                </div>
               </div>
               <div>
                 <label for="valor" class="field-label"
@@ -888,14 +948,14 @@
       const photoGrid = document.getElementById("photoGrid");
       const photoCount = document.getElementById("photoCount");
       const photoSection = document.getElementById("photoSection");
-      
+
       // NOVOS ELEMENTOS DO DDI
       const paisDDI = document.getElementById("paisDDI"); // Agora é um input hidden
       const btnDDI = document.getElementById("btnDDI");
-      
+
       const telefone = document.getElementById("telefone");
       const nome = document.getElementById("nome");
-      
+
       const inputServico = document.getElementById("servico");
       const inputQuantidade = document.getElementById("quantidade");
       const fakeServico = document.getElementById("fakeServico");
@@ -929,7 +989,14 @@
       // ==========================================
       // MODAL CUSTOMIZADO
       // ==========================================
-      const opcoesServico = ["Alinhamento", "Conserto", "Escapamento", "Mecanica", "Reforma", "Solda"];
+      const opcoesServico = [
+        "Alinhamento",
+        "Conserto",
+        "Escapamento",
+        "Mecanica",
+        "Reforma",
+        "Solda",
+      ];
       const opcoesQuantidade = ["1", "2", "3", "4", "5", "6"];
       let campoAtivoModal = "";
 
@@ -938,17 +1005,21 @@
         const modal = document.getElementById("customModal");
         const titulo = document.getElementById("modalTitle");
         const lista = document.getElementById("modalList");
-        
-        const opcoes = campo === "servico" ? opcoesServico : opcoesQuantidade;
-        const valorAtual = campo === "servico" ? inputServico.value : inputQuantidade.value;
 
-        titulo.innerText = campo === "servico" ? "Selecione o Serviço" : "Selecione a Quantidade";
+        const opcoes = campo === "servico" ? opcoesServico : opcoesQuantidade;
+        const valorAtual =
+          campo === "servico" ? inputServico.value : inputQuantidade.value;
+
+        titulo.innerText =
+          campo === "servico"
+            ? "Selecione o Serviço"
+            : "Selecione a Quantidade";
         lista.innerHTML = "";
 
-        opcoes.forEach(opt => {
+        opcoes.forEach((opt) => {
           const div = document.createElement("div");
-          div.className = `modal-item ${valorAtual === opt ? 'selected' : ''}`;
-          div.innerHTML = `<span>${opt}</span> ${valorAtual === opt ? '<i class="fa-solid fa-check"></i>' : ''}`;
+          div.className = `modal-item ${valorAtual === opt ? "selected" : ""}`;
+          div.innerHTML = `<span>${opt}</span> ${valorAtual === opt ? '<i class="fa-solid fa-check"></i>' : ""}`;
           div.onclick = () => selecionarOpcao(opt);
           lista.appendChild(div);
         });
@@ -957,7 +1028,8 @@
       }
 
       function fecharModalOpcoes(event) {
-        if (event && event.target !== document.getElementById("customModal")) return;
+        if (event && event.target !== document.getElementById("customModal"))
+          return;
         document.getElementById("customModal").classList.remove("show");
       }
 
@@ -966,8 +1038,15 @@
           inputServico.value = valorSelecionado;
           fakeServico.innerText = valorSelecionado;
           validarServico();
-          
-          const tabelaPrecos = { Alinhamento: 50, Solda: 100, Conserto: 150, Escapamento: 200, Mecanica: 200, Reforma: 200 };
+
+          const tabelaPrecos = {
+            Alinhamento: 50,
+            Solda: 100,
+            Conserto: 150,
+            Escapamento: 200,
+            Mecanica: 200,
+            Reforma: 200,
+          };
           if (tabelaPrecos[valorSelecionado]) {
             inputQuantidade.value = "1";
             fakeQuantidade.innerText = "1";
@@ -1428,10 +1507,12 @@
         btnDDI.innerHTML = "🇧🇷 +55";
         telefone.placeholder = "(00) 00000-0000";
         valor.value = "";
-        
-        inputServico.value = ""; fakeServico.innerText = "Selec.";
-        inputQuantidade.value = ""; fakeQuantidade.innerText = "0";
-        
+
+        inputServico.value = "";
+        fakeServico.innerText = "Selec.";
+        inputQuantidade.value = "";
+        fakeQuantidade.innerText = "0";
+
         fotos = [];
         renderFotos();
         photoSection.classList.remove("has-error");
