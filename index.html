@@ -211,7 +211,6 @@
         color: #ef4444;
       }
 
-      /* NOVO BOTÃO DE DDI (SUBSTITUI O SELECT NATIVO) */
       .btn-ddi {
         width: 100px;
         height: 44px;
@@ -598,7 +597,6 @@
       class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[500px] mx-auto"
     ></div>
 
-    <!-- MODAL CUSTOMIZADO DE OPÇÕES (SERVIÇO, QUANTIDADE E DDI) -->
     <div
       id="customModal"
       class="modal-custom"
@@ -623,7 +621,6 @@
       </div>
     </div>
 
-    <!-- MODAL DE PESQUISA -->
     <div
       id="modalPesquisa"
       class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3"
@@ -674,7 +671,6 @@
       </div>
     </div>
 
-    <!-- MODAL VISUALIZADOR DE IMAGENS -->
     <div
       id="modalImagens"
       class="fixed inset-0 z-[60] bg-black/95 hidden flex flex-col justify-between p-4"
@@ -795,7 +791,6 @@
                 >Telefone (Opcional)</label
               >
               <div class="flex gap-2">
-                <!-- BOTÃO DE DDI SUBSTITUINDO O SELECT -->
                 <input type="hidden" id="paisDDI" value="+55" />
                 <button
                   type="button"
@@ -930,7 +925,6 @@
       </footer>
     </div>
 
-    <!-- SCRIPTS DO SUPABASE E CAPACITOR -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
       if (window.Capacitor && window.Capacitor.Plugins) {
@@ -949,8 +943,7 @@
       const photoCount = document.getElementById("photoCount");
       const photoSection = document.getElementById("photoSection");
 
-      // NOVOS ELEMENTOS DO DDI
-      const paisDDI = document.getElementById("paisDDI"); // Agora é um input hidden
+      const paisDDI = document.getElementById("paisDDI");
       const btnDDI = document.getElementById("btnDDI");
 
       const telefone = document.getElementById("telefone");
@@ -968,10 +961,8 @@
       let fotos = [];
       let galeriaAtual = [];
       let indexFotoAtual = 0;
+      let isSaving = false; // TRAVA PARA EVITAR DUPLICIDADE
 
-      // ==========================================
-      // FUNÇÃO PARA ALTERNAR O DDI (SEM TELA BRANCA)
-      // ==========================================
       function alternarDDI() {
         if (paisDDI.value === "+55") {
           paisDDI.value = "+595";
@@ -982,13 +973,10 @@
           btnDDI.innerHTML = "🇧🇷 +55";
           telefone.placeholder = "(00) 00000-0000";
         }
-        telefone.value = ""; // Limpa o telefone ao trocar o país
+        telefone.value = "";
         aplicarMascaraTelefone();
       }
 
-      // ==========================================
-      // MODAL CUSTOMIZADO
-      // ==========================================
       const opcoesServico = [
         "Alinhamento",
         "Conserto",
@@ -1447,6 +1435,10 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        // TRAVA DE SEGURANÇA: Se já estiver salvando, ignora o clique
+        if (isSaving) return;
+
         const okNome = validarNome();
         const okTelefone = validarTelefone();
         const okServico = validarServico();
@@ -1473,9 +1465,12 @@
           return;
         }
 
+        // Ativa a trava
+        isSaving = true;
         submitButton.disabled = true;
         submitButton.innerHTML =
           '<i class="fa-solid fa-spinner fa-spin"></i> PROCESSANDO...';
+
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
@@ -1500,51 +1495,71 @@
         };
 
         const arquivosFotos = fotos.map((f) => f.arquivo);
-        await salvarOSOffline(cadastro, arquivosFotos);
 
-        form.reset();
-        paisDDI.value = "+55";
-        btnDDI.innerHTML = "🇧🇷 +55";
-        telefone.placeholder = "(00) 00000-0000";
-        valor.value = "";
+        // Envia para a nuvem ou salva offline
+        try {
+          if (navigator.onLine) {
+            submitButton.innerHTML =
+              '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
 
-        inputServico.value = "";
-        fakeServico.innerText = "Selec.";
-        inputQuantidade.value = "";
-        fakeQuantidade.innerText = "0";
+            let urlsDasFotos = [];
+            for (const arquivo of arquivosFotos) {
+              const nomeArquivo = `${Date.now()}-${Math.random().toString(36).substring(2)}.jpeg`;
+              const { error: uploadError } = await supabaseClient.storage
+                .from("fotos-ordens")
+                .upload(nomeArquivo, arquivo);
+              if (uploadError) throw new Error("Erro upload");
+              const { data: urlData } = supabaseClient.storage
+                .from("fotos-ordens")
+                .getPublicUrl(nomeArquivo);
+              urlsDasFotos.push(urlData.publicUrl);
+            }
 
-        fotos = [];
-        renderFotos();
-        photoSection.classList.remove("has-error");
-        atualizarProgresso();
+            const cadastroFinal = { ...cadastro, fotos_urls: urlsDasFotos };
+            const { error } = await supabaseClient
+              .from("ordens_servico")
+              .insert([cadastroFinal]);
+            if (error) throw error;
 
-        if (navigator.onLine) {
-          submitButton.innerHTML =
-            '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
-          await sincronizarPendentes();
-          let pendentes = JSON.parse(
-            localStorage.getItem("@osfacil_pendentes") || "[]",
-          );
-          if (pendentes.length > 0) {
-            mostrarToast(
-              "Salvo no celular! Enviaremos quando a internet melhorar.",
-              "erro",
-            );
-          } else {
             mostrarToast("Pré-cadastro enviado com sucesso!", "sucesso");
+          } else {
+            await salvarOSOffline(cadastro, arquivosFotos);
+            mostrarToast(
+              "Sem internet. Salvo no celular com segurança!",
+              "sucesso",
+            );
           }
-        } else {
-          mostrarToast(
-            "Sem internet. Salvo no celular com segurança!",
-            "sucesso",
-          );
-        }
 
-        submitButton.disabled = false;
-        submitButton.innerHTML =
-          '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
+          // Limpa o formulário SÓ SE SALVOU COM SUCESSO
+          form.reset();
+          paisDDI.value = "+55";
+          btnDDI.innerHTML = "🇧🇷 +55";
+          telefone.placeholder = "(00) 00000-0000";
+          valor.value = "";
+          inputServico.value = "";
+          fakeServico.innerText = "Selec.";
+          inputQuantidade.value = "";
+          fakeQuantidade.innerText = "0";
+          fotos = [];
+          renderFotos();
+          photoSection.classList.remove("has-error");
+          atualizarProgresso();
+        } catch (error) {
+          console.error(error);
+          mostrarToast("Erro ao enviar. Tente novamente.", "erro");
+          // Se der erro, salva offline para não perder os dados
+          await salvarOSOffline(cadastro, arquivosFotos);
+          mostrarToast("Salvo no celular! Enviaremos depois.", "erro");
+        } finally {
+          // Libera a trava e o botão
+          isSaving = false;
+          submitButton.disabled = false;
+          submitButton.innerHTML =
+            '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
+        }
       });
 
+      // ... (O restante das funções de pesquisa e modal de imagens continua igual)
       function abrirModalPesquisa() {
         document.getElementById("modalPesquisa").classList.remove("hidden");
         document.getElementById("inputBusca").focus();
