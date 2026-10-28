@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#172033" />
+    <title>OS Fácil - Pré-Cadastro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        margin: 0;
+        overflow: hidden;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #172033;
+        overscroll-behavior: none;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        font: inherit;
+      }
+      input,
+      textarea {
+        text-transform: uppercase;
+      }
+      input[type="tel"],
+      input#valor {
+        text-transform: none;
+      }
+
+      .app {
+        width: 100%;
+        max-width: 600px;
+        height: 100%;
+        height: 100dvh;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: #f3f5f9;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .app-header {
+        flex-shrink: 0;
+        background: #172033;
+        color: white;
+        padding: calc(13px + env(safe-area-inset-top, 0px)) 18px 13px 18px;
+        border-bottom: 1px solid #2a364f;
+      }
+      .header-step {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .step-dot {
+        flex: 1;
+        height: 4px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        transition: background 0.3s;
+      }
+      .step-dot.active {
+        background: #435edb;
+      }
+      .step-dot.done {
+        background: #4ade80;
+      }
+
+      .app-main {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
+        overflow-y: auto;
+      }
+
+      .form-card {
+        flex-shrink: 0;
+        padding: 10px;
+        border: 1px solid #e6eaf0;
+        border-radius: 12px;
+        background: white;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .form-card.has-error {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+      }
+      .form-card.is-valid {
+        border-color: #22c55e;
+      }
+
+      .field-label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+        color: #465166;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .field-label .req {
+        color: #ef4444;
+      }
+      .field-hint {
+        font-size: 9px;
+        color: #94a3b8;
+        font-weight: 500;
+        margin-left: auto;
+      }
+
+      .field {
+        width: 100%;
+        min-width: 0;
+        height: 38px;
+        padding: 0 10px;
+        border: 1px solid #dce2eb;
+        border-radius: 9px;
+        background: white;
+        color: #172033;
+        font-size: 12px;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .field:focus {
+        border-color: #435edb;
+        box-shadow: 0 0 0 2px #435edb20;
+      }
+      .field.is-invalid {
+        border-color: #ef4444;
+        background: #fef2f2;
+      }
+      .field.is-valid {
+        border-color: #86efac;
+        background: #f0fdf4;
+      }
+      textarea.field {
+        height: 52px;
+        min-height: 52px;
+        padding: 9px 10px;
+        resize: none;
+      }
+      .field::placeholder {
+        color: #a8b2c4;
+        text-transform: none;
+      }
+
+      .field-wrap {
+        position: relative;
+        flex: 1;
+      }
+      .field-wrap .field {
+        padding-left: 32px;
+      }
+      .field-wrap .field-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #94a3b8;
+        pointer-events: none;
+        transition: color 0.15s;
+      }
+      .field-wrap:focus-within .field-icon {
+        color: #435edb;
+      }
+      .field-wrap .field-status {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        pointer-events: none;
+      }
+      .field-status.ok {
+        color: #22c55e;
+      }
+      .field-status.err {
+        color: #ef4444;
+      }
+
+      select#paisDDI {
+        width: 95px;
+        padding: 0 5px;
+        text-align: center;
+        font-weight: 600;
+        cursor: pointer;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2394a3b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
+        background-repeat: no-repeat;
+        background-position: right 5px center;
+        background-size: 10px;
+      }
+
+      .photo-section {
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border: 1px solid #e6eaf0;
+        border-radius: 12px;
+        background: white;
+        overflow: hidden;
+      }
+      .photo-section.has-error {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+      }
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .photo-slot {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border: 1px dashed #c7cfdd;
+        border-radius: 9px;
+        background: #f7f9fc;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .photo-slot:hover {
+        border-color: #435edb;
+        background: #f0f3ff;
+      }
+      .photo-slot img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .photo-add {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: #78849a;
+        font-size: 10px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+      }
+      .photo-add i {
+        font-size: 20px;
+        color: #5268d8;
+        transition: transform 0.2s;
+      }
+      .photo-add:hover i {
+        transform: scale(1.15);
+      }
+
+      .photo-remove {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        display: flex;
+        width: 25px;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        background: #172033e8;
+        color: white;
+        font-size: 11px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .photo-remove:hover {
+        background: #ef4444;
+      }
+
+      .app-footer {
+        flex-shrink: 0;
+        background: #f3f5f9;
+        border-top: 1px solid #e2e8f0;
+        padding: 9px 12px calc(12px + env(safe-area-inset-bottom, 0px)) 12px;
+      }
+      .submit-button {
+        width: 100%;
+        height: 46px;
+        border: none;
+        border-radius: 11px;
+        background: #435edb;
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .submit-button:active {
+        background: #334bc0;
+        transform: scale(0.98);
+      }
+      .submit-button:disabled {
+        background: #c7cfdd;
+        cursor: not-allowed;
+      }
+      .home-indicator {
+        display: none;
+      }
+
+      #modalPesquisa > div {
+        width: 100%;
+        max-width: 500px;
+        height: 85dvh;
+      }
+
+      @media (min-width: 768px) {
+        .field {
+          height: 44px;
+          font-size: 13px;
+        }
+        textarea.field {
+          height: 65px;
+          min-height: 65px;
+          font-size: 13px;
+        }
+        .photo-add span {
+          font-size: 12px;
+        }
+        .photo-add i {
+          font-size: 24px;
+        }
+        .field-label {
+          font-size: 12px;
+        }
+      }
+
+      @media (max-height: 700px) {
+        .app-header {
+          padding: calc(9px + env(safe-area-inset-top, 0px)) 15px 9px 15px;
+        }
+        .app-main {
+          gap: 6px;
+          padding: 7px 10px;
+        }
+        .form-card,
+        .photo-section {
+          padding: 8px;
+        }
+        .field {
+          height: 34px;
+          font-size: 11px;
+        }
+        textarea.field {
+          height: 43px;
+          min-height: 43px;
+        }
+        .app-footer {
+          padding: 6px 10px calc(7px + env(safe-area-inset-bottom, 0px)) 10px;
+        }
+        .submit-button {
+          height: 41px;
+        }
+        .photo-grid {
+          gap: 5px;
+        }
+        .field-label {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="toast-container"
+      class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[500px] mx-auto"
+    ></div>
+
+    <!-- MODAL DE PESQUISA -->
+    <div
+      id="modalPesquisa"
+      class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3"
+    >
+      <div
+        class="bg-white rounded-2xl flex flex-col overflow-hidden shadow-2xl"
+      >
+        <div
+          class="bg-[#172033] text-white p-4 flex items-center justify-between flex-shrink-0"
+        >
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-magnifying-glass text-indigo-400"></i>
+            <h2 class="text-sm font-bold">Pesquisar Ordem de Serviço</h2>
+          </div>
+          <button
+            type="button"
+            onclick="fecharModalPesquisa()"
+            class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/20 transition-colors"
+          >
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <div class="p-3 bg-slate-100 border-b border-slate-200 flex-shrink-0">
+          <div class="relative">
+            <i
+              class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"
+            ></i>
+            <input
+              id="inputBusca"
+              type="text"
+              class="field pl-8 uppercase"
+              placeholder="Digite o nome ou ID/nº do serviço..."
+              oninput="executarBusca()"
+            />
+          </div>
+        </div>
+
+        <div
+          id="listaResultados"
+          class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 bg-slate-50"
+        >
+          <div class="text-center py-10 text-slate-400 text-xs">
+            <i class="fa-solid fa-clipboard text-2xl mb-2 text-slate-300"></i>
+            <p>Digite algo para pesquisar os serviços salvos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL VISUALIZADOR DE IMAGENS -->
+    <div
+      id="modalImagens"
+      class="fixed inset-0 z-[60] bg-black/95 hidden flex flex-col justify-between p-4"
+    >
+      <div
+        class="flex justify-between items-center text-white z-10 relative mt-8"
+      >
+        <span
+          id="contadorFotoModal"
+          class="text-sm font-semibold bg-white/10 px-3 py-1 rounded-full"
+          >1/1</span
+        >
+        <button
+          type="button"
+          onclick="fecharModalImagens()"
+          class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition"
+        >
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div
+        class="flex-1 flex items-center justify-between relative py-4 overflow-hidden"
+        id="areaImagem"
+      >
+        <button
+          onclick="navegarImagem(-1)"
+          id="btnPrev"
+          class="absolute left-2 md:left-10 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition hidden"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <img
+          id="imagemAmpliada"
+          src=""
+          class="max-w-full max-h-full object-contain rounded-lg shadow-2xl mx-auto transition-opacity duration-200"
+          alt="Foto Ampliada"
+        />
+
+        <button
+          onclick="navegarImagem(1)"
+          id="btnNext"
+          class="absolute right-2 md:right-10 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition hidden"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="text-center text-slate-400 text-xs py-2 z-10 relative mb-4">
+        Deslize para os lados ou use as setas
+      </div>
+    </div>
+
+    <div class="app">
+      <header class="app-header">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/10"
+          >
+            <i class="fa-solid fa-clipboard-list text-xl"></i>
+          </div>
+          <div class="min-w-0">
+            <h1 class="text-base font-bold leading-tight">OS Fácil</h1>
+            <p class="mt-1 text-[10px] text-slate-300">
+              Pré-cadastro de serviço
+            </p>
+          </div>
+          <div class="ml-auto flex items-center gap-2">
+            <button
+              type="button"
+              onclick="abrirModalPesquisa()"
+              class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-1.5 px-3 rounded-lg shadow transition-colors"
+            >
+              <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+              <span class="hidden sm:inline">Pesquisar</span>
+            </button>
+          </div>
+        </div>
+        <div class="header-step">
+          <div class="step-dot active" id="step1"></div>
+          <div class="step-dot" id="step2"></div>
+          <div class="step-dot" id="step3"></div>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <form id="osForm" class="flex min-h-0 flex-1 flex-col gap-2" novalidate>
+          <section class="form-card" id="cardCliente">
+            <div class="mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-user text-xs text-indigo-600"></i>
+              <h2 class="text-xs font-bold text-slate-800">Dados do cliente</h2>
+              <span class="field-hint" id="hintCliente">1 de 3</span>
+            </div>
+            <div class="mb-2">
+              <label for="nome" class="field-label"
+                >Nome do cliente (Opcional)</label
+              >
+              <div class="field-wrap">
+                <i class="fa-solid fa-user field-icon"></i>
+                <input
+                  id="nome"
+                  name="nome"
+                  class="field"
+                  type="text"
+                  placeholder="Consumidor"
+                  autocomplete="name"
+                />
+                <i
+                  class="fa-solid fa-circle-check field-status ok"
+                  id="statusNome"
+                  style="display: none"
+                ></i>
+              </div>
+            </div>
+            <div>
+              <label for="telefone" class="field-label"
+                >Telefone <span class="req">*</span></label
+              >
+              <div class="flex gap-2">
+                <select id="paisDDI" class="field">
+                  <option value="+55" selected>🇧🇷 +55</option>
+                  <option value="+595">🇵🇾 +595</option>
+                </select>
+                <div class="field-wrap">
+                  <i class="fa-solid fa-phone field-icon"></i>
+                  <input
+                    id="telefone"
+                    name="telefone"
+                    class="field"
+                    type="tel"
+                    placeholder="(00) 00000-0000"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                  />
+                  <i
+                    class="fa-solid fa-circle-check field-status ok"
+                    id="statusTelefone"
+                    style="display: none"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card" id="cardServico">
+            <div class="mb-2 flex items-center gap-2">
+              <i
+                class="fa-solid fa-screwdriver-wrench text-xs text-indigo-600"
+              ></i>
+              <h2 class="text-xs font-bold text-slate-800">Dados do serviço</h2>
+              <span class="field-hint" id="hintServico">2 de 3</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label for="servico" class="field-label"
+                  >Serviço <span class="req">*</span></label
+                >
+                <select id="servico" name="servico" class="field" required>
+                  <option value="">Selec.</option>
+                  <option value="Alinhamento">Alinhamento</option>
+                  <option value="Conserto">Conserto</option>
+                  <option value="Escapamento">Escapamento</option>
+                  <option value="Mecanica">Mecanica</option>
+                  <option value="Reforma">Reforma</option>
+                  <option value="Solda">Solda</option>
+                </select>
+              </div>
+              <div>
+                <label for="quantidade" class="field-label"
+                  >Qtd <span class="req">*</span></label
+                >
+                <select
+                  id="quantidade"
+                  name="quantidade"
+                  class="field"
+                  required
+                >
+                  <option value="">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              <div>
+                <label for="valor" class="field-label"
+                  >Valor <span class="req">*</span></label
+                >
+                <input
+                  id="valor"
+                  name="valor"
+                  class="field"
+                  type="text"
+                  placeholder="R$ 0,00"
+                  required
+                />
+              </div>
+            </div>
+            <div class="mt-2">
+              <label for="observacao" class="field-label"
+                >Descrição do serviço <span class="req">*</span></label
+              >
+              <textarea
+                id="observacao"
+                name="observacao"
+                class="field"
+                placeholder="Descreva o problema..."
+                required
+              ></textarea>
+            </div>
+          </section>
+
+          <section class="photo-section" id="photoSection">
+            <div class="mb-2 flex flex-shrink-0 items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-camera text-xs text-indigo-600"></i>
+                <h2 class="text-xs font-bold text-slate-800">
+                  Fotos do serviço <span class="req">*</span>
+                </h2>
+              </div>
+              <span
+                id="photoCount"
+                class="rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-700"
+                >0/6 fotos</span
+              >
+            </div>
+            <p class="mb-2 flex-shrink-0 text-[10px] text-slate-500">
+              <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
+              Adicione pelo menos 1 foto.
+            </p>
+            <div id="photoGrid" class="photo-grid"></div>
+          </section>
+        </form>
+      </main>
+
+      <footer class="app-footer">
+        <button
+          id="submitButton"
+          type="submit"
+          form="osForm"
+          class="submit-button"
+        >
+          <i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO
+        </button>
+      </footer>
+    </div>
+
+    <!-- SCRIPTS DO SUPABASE E CAPACITOR -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      // Inicializa a câmera nativa do Capacitor, se disponível
+      if (window.Capacitor && window.Capacitor.Plugins) {
+        window.Camera = window.Capacitor.Plugins.Camera;
+      }
+    </script>
+
+    <script>
+      const supabaseUrl = "https://kiiswukzwwoznkgjyaod.supabase.co";
+      const supabaseKey = "sb_publishable_WPRvraB-40Fz1RuKbd5bRg_3tGvyAxg";
+      const { createClient } = supabase;
+      const supabaseClient = createClient(supabaseUrl, supabaseKey);
+      const MAX_FOTOS = 6;
+      const form = document.getElementById("osForm");
+      const photoGrid = document.getElementById("photoGrid");
+      const photoCount = document.getElementById("photoCount");
+      const photoSection = document.getElementById("photoSection");
+      const paisDDI = document.getElementById("paisDDI");
+      const telefone = document.getElementById("telefone");
+      const nome = document.getElementById("nome");
+      const servico = document.getElementById("servico");
+      const quantidade = document.getElementById("quantidade");
+      const valor = document.getElementById("valor");
+      const observacao = document.getElementById("observacao");
+      const submitButton = document.getElementById("submitButton");
+
+      let fotos = [];
+      let galeriaAtual = [];
+      let indexFotoAtual = 0;
+
+      function mostrarToast(mensagem, tipo = "sucesso") {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        const isSucesso = tipo === "sucesso";
+        const bgColor = isSucesso ? "bg-green-500" : "bg-red-500";
+        const icone = isSucesso ? "fa-circle-check" : "fa-circle-exclamation";
+        toast.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 mb-2 transition-all duration-300 transform -translate-y-10 opacity-0 font-medium text-sm pointer-events-auto w-full max-w-[400px]`;
+        toast.innerHTML = `<i class="fa-solid ${icone} text-lg"></i><span>${mensagem}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.remove("-translate-y-10", "opacity-0");
+        }, 10);
+        setTimeout(() => {
+          toast.classList.add("-translate-y-10", "opacity-0");
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      }
+
+      // COMPRESSÃO PARA NAVEGADOR
+      function comprimirImagemWeb(arquivo) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(arquivo);
+          reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              const MAX_WIDTH = 1024;
+              const MAX_HEIGHT = 1024;
+              let width = img.width;
+              let height = img.height;
+
+              if (width > height) {
+                if (width > MAX_WIDTH) {
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+                }
+              } else {
+                if (height > MAX_HEIGHT) {
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+                }
+              }
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, width, height);
+              canvas.toBlob(
+                (blob) =>
+                  resolve(
+                    new File([blob], arquivo.name, { type: "image/jpeg" }),
+                  ),
+                "image/jpeg",
+                0.7,
+              );
+            };
+          };
+          reader.onerror = (error) => reject(error);
+        });
+      }
+
+      function renderFotos() {
+        photoGrid.innerHTML = "";
+        for (let i = 0; i < MAX_FOTOS; i++) {
+          const foto = fotos[i];
+          const slot = document.createElement("div");
+          slot.className = "photo-slot";
+
+          if (foto) {
+            const imagem = document.createElement("img");
+            imagem.src = foto.url;
+            slot.appendChild(imagem);
+            const remover = document.createElement("button");
+            remover.type = "button";
+            remover.className = "photo-remove";
+            remover.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            remover.addEventListener("click", () => {
+              fotos.splice(i, 1);
+              renderFotos();
+              validarFotos();
+              atualizarProgresso();
+            });
+            slot.appendChild(remover);
+          } else {
+            const adicionar = document.createElement("button");
+            adicionar.type = "button";
+            adicionar.className = "photo-add";
+            adicionar.innerHTML = `<i class="fa-solid fa-camera"></i><span>Adicionar</span>`;
+
+            adicionar.addEventListener("click", async () => {
+              // 1. CÂMERA NATIVA (APP ANDROID)
+              if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+                try {
+                  const image = await Camera.getPhoto({
+                    quality: 70,
+                    allowEditing: false,
+                    resultType: "dataUrl",
+                    source: "CAMERA",
+                  });
+
+                  const res = await fetch(image.dataUrl);
+                  const blob = await res.blob();
+                  const file = new File([blob], `foto_${Date.now()}.jpeg`, {
+                    type: "image/jpeg",
+                  });
+
+                  fotos.push({ arquivo: file, url: image.dataUrl });
+                  renderFotos();
+                  validarFotos();
+                  atualizarProgresso();
+                } catch (e) {
+                  if (e.message && e.message.toLowerCase().includes("cancel"))
+                    return;
+                  console.log("Erro na câmera nativa:", e);
+                  alert("Erro ao abrir a câmera: " + (e.message || e));
+                }
+              }
+              // 2. NAVEGADOR WEB
+              else {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "image/*";
+                input.capture = "environment";
+
+                input.onchange = async (event) => {
+                  const file = event.target.files[0];
+                  if (!file) return;
+
+                  try {
+                    const arquivoLeve = await comprimirImagemWeb(file);
+                    fotos.push({
+                      arquivo: arquivoLeve,
+                      url: URL.createObjectURL(arquivoLeve),
+                    });
+                    renderFotos();
+                    validarFotos();
+                    atualizarProgresso();
+                  } catch (err) {
+                    console.error("Erro ao processar imagem", err);
+                    alert("Erro ao processar a imagem.");
+                  }
+                };
+                input.click();
+              }
+            });
+            slot.appendChild(adicionar);
+          }
+          photoGrid.appendChild(slot);
+        }
+        photoCount.textContent = `${fotos.length}/${MAX_FOTOS} fotos`;
+        photoCount.className =
+          fotos.length === MAX_FOTOS
+            ? "rounded-full bg-green-50 px-2 py-1 text-[10px] font-bold text-green-700"
+            : "rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-700";
+      }
+
+      function aplicarMascaraTelefone() {
+        let numero = telefone.value.replace(/\D/g, "");
+        if (paisDDI.value === "+55") {
+          numero = numero.slice(0, 11);
+          if (numero.length > 10) {
+            numero = numero.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+          } else if (numero.length > 6) {
+            numero = numero.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+          } else if (numero.length > 2) {
+            numero = numero.replace(/^(\d{2})(\d+)/, "($1) $2");
+          } else if (numero.length > 0) {
+            numero = numero.replace(/^(\d*)/, "($1");
+          }
+        } else {
+          numero = numero.slice(0, 9);
+          if (numero.length > 6) {
+            numero = numero.replace(/^(\d{3})(\d{3})(\d{0,3})$/, "($1) $2-$3");
+          } else if (numero.length > 3) {
+            numero = numero.replace(/^(\d{3})(\d+)/, "($1) $2");
+          } else if (numero.length > 0) {
+            numero = numero.replace(/^(\d*)/, "($1");
+          }
+        }
+        telefone.value = numero;
+        validarTelefone();
+        atualizarProgresso();
+      }
+
+      telefone.addEventListener("input", aplicarMascaraTelefone);
+
+      paisDDI.addEventListener("change", () => {
+        telefone.value = "";
+        telefone.placeholder =
+          paisDDI.value === "+55" ? "(00) 00000-0000" : "(000) 000-000";
+        aplicarMascaraTelefone();
+      });
+
+      valor.addEventListener("input", (e) => {
+        let v = e.target.value.replace(/\D/g, "");
+        v = (v / 100).toFixed(2) + "";
+        v = v.replace(".", ",");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        e.target.value = "R$ " + v;
+        validarValor();
+        atualizarProgresso();
+      });
+
+      servico.addEventListener("change", () => {
+        const tabelaPrecos = {
+          Alinhamento: 50,
+          Solda: 100,
+          Conserto: 150,
+          Escapamento: 200,
+          Mecanica: 200,
+          Reforma: 200,
+        };
+        const preco = tabelaPrecos[servico.value];
+        if (preco) {
+          quantidade.value = "1";
+          valor.value = (preco * 100).toString();
+          valor.dispatchEvent(new Event("input"));
+          validarQuantidade();
+          validarValor();
+        }
+        validarServico();
+        atualizarProgresso();
+      });
+
+      function validarNome() {
+        const valorNome = nome.value.trim();
+        const valido = valorNome.length === 0 || valorNome.length >= 3;
+        nome.classList.toggle("is-invalid", !valido && valorNome.length > 0);
+        nome.classList.toggle("is-valid", valorNome.length >= 3);
+        document.getElementById("statusNome").style.display =
+          valorNome.length >= 3 ? "block" : "none";
+        return valido;
+      }
+
+      function validarTelefone() {
+        const digitos = telefone.value.replace(/\D/g, "");
+        let valido =
+          paisDDI.value === "+55"
+            ? digitos.length === 10 || digitos.length === 11
+            : digitos.length === 9;
+        telefone.classList.toggle("is-invalid", !valido && digitos.length > 0);
+        telefone.classList.toggle("is-valid", valido);
+        document.getElementById("statusTelefone").style.display = valido
+          ? "block"
+          : "none";
+        return valido;
+      }
+
+      function validarServico() {
+        return servico.value !== "";
+      }
+      function validarQuantidade() {
+        return quantidade.value !== "";
+      }
+      function validarValor() {
+        const temValor = valor.value.replace(/\D/g, "").length > 0;
+        valor.classList.toggle(
+          "is-invalid",
+          !temValor && valor.value.length > 0,
+        );
+        valor.classList.toggle("is-valid", temValor);
+        return temValor;
+      }
+      function validarObservacao() {
+        const valido = observacao.value.trim().length >= 3;
+        observacao.classList.toggle(
+          "is-invalid",
+          !valido && observacao.value.length > 0,
+        );
+        observacao.classList.toggle("is-valid", valido);
+        return valido;
+      }
+      function validarFotos() {
+        const valido = fotos.length > 0;
+        photoSection.classList.toggle("has-error", !valido);
+        return valido;
+      }
+
+      function atualizarProgresso() {
+        const c1 = validarNome() && validarTelefone();
+        const c2 =
+          validarServico() &&
+          validarQuantidade() &&
+          validarValor() &&
+          validarObservacao();
+        const c3 = validarFotos();
+        document.getElementById("step1").classList.toggle("done", c1);
+        document.getElementById("step2").classList.toggle("done", c2);
+        document.getElementById("step3").classList.toggle("done", c3);
+        document.getElementById("step1").classList.toggle("active", !c1);
+        document.getElementById("step2").classList.toggle("active", c1 && !c2);
+        document
+          .getElementById("step3")
+          .classList.toggle("active", c1 && c2 && !c3);
+        document.getElementById("cardCliente").classList.toggle("is-valid", c1);
+        document.getElementById("cardServico").classList.toggle("is-valid", c2);
+      }
+
+      nome.addEventListener("input", () => {
+        validarNome();
+        atualizarProgresso();
+      });
+      quantidade.addEventListener("change", () => {
+        validarQuantidade();
+        atualizarProgresso();
+      });
+      observacao.addEventListener("input", () => {
+        validarObservacao();
+        atualizarProgresso();
+      });
+
+      function arquivoParaBase64(arquivo) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(arquivo);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+      }
+
+      async function salvarOSOffline(cadastro, arquivosFotos) {
+        const fotosBase64 = [];
+        for (const arquivo of arquivosFotos) {
+          const base64 = await arquivoParaBase64(arquivo);
+          fotosBase64.push({ nome: arquivo.name, base64 });
+        }
+        const novaOS = {
+          idTemp: Date.now(),
+          dados: cadastro,
+          fotos: fotosBase64,
+        };
+        let pendentes = JSON.parse(
+          localStorage.getItem("@osfacil_pendentes") || "[]",
+        );
+        pendentes.push(novaOS);
+        localStorage.setItem("@osfacil_pendentes", JSON.stringify(pendentes));
+      }
+
+      async function sincronizarPendentes() {
+        let pendentes = JSON.parse(
+          localStorage.getItem("@osfacil_pendentes") || "[]",
+        );
+        if (pendentes.length === 0) return;
+        if (!navigator.onLine) return;
+        const restantes = [];
+
+        for (const os of pendentes) {
+          if (
+            !os.dados.telefone ||
+            !os.dados.valor ||
+            !os.dados.observacao ||
+            os.fotos.length === 0
+          ) {
+            console.warn(
+              "OS inválida encontrada no armazenamento. Ignorando...",
+            );
+            continue;
+          }
+          try {
+            let urlsDasFotos = [];
+            for (const foto of os.fotos) {
+              const res = await fetch(foto.base64);
+              const blob = await res.blob();
+              const nomeArquivo = `${Date.now()}-${foto.nome.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+              const { error: uploadError } = await supabaseClient.storage
+                .from("fotos-ordens")
+                .upload(nomeArquivo, blob);
+              if (uploadError) throw new Error("Erro upload");
+              const { data: urlData } = supabaseClient.storage
+                .from("fotos-ordens")
+                .getPublicUrl(nomeArquivo);
+              urlsDasFotos.push(urlData.publicUrl);
+            }
+            const cadastroFinal = { ...os.dados, fotos_urls: urlsDasFotos };
+            const { error } = await supabaseClient
+              .from("ordens_servico")
+              .insert([cadastroFinal]);
+            if (error) throw error;
+          } catch (error) {
+            console.error("Falha ao sincronizar OS pendente.", error);
+            restantes.push(os);
+          }
+        }
+        localStorage.setItem("@osfacil_pendentes", JSON.stringify(restantes));
+        if (restantes.length === 0 && pendentes.length > 0) {
+          mostrarToast("Dados pendentes sincronizados!", "sucesso");
+        }
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const okNome = validarNome();
+        const okTelefone = validarTelefone();
+        const okServico = validarServico();
+        const okQuantidade = validarQuantidade();
+        const okValor = validarValor();
+        const okObservacao = validarObservacao();
+        const okFotos = validarFotos();
+        atualizarProgresso();
+
+        if (
+          !okNome ||
+          !okTelefone ||
+          !okServico ||
+          !okQuantidade ||
+          !okValor ||
+          !okObservacao ||
+          !okFotos
+        ) {
+          let msgErro = "Preencha todos os campos obrigatórios (*).";
+          if (!okObservacao)
+            msgErro = "Por favor, preencha a descrição do serviço.";
+          if (!okFotos) msgErro = "Por favor, adicione pelo menos 1 foto.";
+          mostrarToast(msgErro, "erro");
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> PROCESSANDO...';
+        const valorNumerico = parseFloat(
+          valor.value.replace(/[^\d,]/g, "").replace(",", "."),
+        );
+        const telefoneCompleto = `${paisDDI.value} ${telefone.value.trim()}`;
+        let nomeFinal =
+          nome.value.trim() === ""
+            ? "CONSUMIDOR"
+            : nome.value.trim().toUpperCase();
+
+        const cadastro = {
+          nome: nomeFinal,
+          telefone: telefoneCompleto,
+          servico: servico.value.toUpperCase(),
+          quantidade: parseInt(quantidade.value),
+          valor: valorNumerico,
+          observacao: observacao.value.trim().toUpperCase(),
+        };
+
+        const arquivosFotos = fotos.map((f) => f.arquivo);
+        await salvarOSOffline(cadastro, arquivosFotos);
+
+        form.reset();
+        paisDDI.value = "+55";
+        telefone.placeholder = "(00) 00000-0000";
+        valor.value = "";
+        fotos = [];
+        renderFotos();
+        photoSection.classList.remove("has-error");
+        atualizarProgresso();
+
+        if (navigator.onLine) {
+          submitButton.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
+          await sincronizarPendentes();
+          let pendentes = JSON.parse(
+            localStorage.getItem("@osfacil_pendentes") || "[]",
+          );
+          if (pendentes.length > 0) {
+            mostrarToast(
+              "Salvo no celular! Enviaremos quando a internet melhorar.",
+              "erro",
+            );
+          } else {
+            mostrarToast("Pré-cadastro enviado com sucesso!", "sucesso");
+          }
+        } else {
+          mostrarToast(
+            "Sem internet. Salvo no celular com segurança!",
+            "sucesso",
+          );
+        }
+
+        submitButton.disabled = false;
+        submitButton.innerHTML =
+          '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
+      });
+
+      function abrirModalPesquisa() {
+        document.getElementById("modalPesquisa").classList.remove("hidden");
+        document.getElementById("inputBusca").focus();
+        executarBusca();
+      }
+
+      function fecharModalPesquisa() {
+        document.getElementById("modalPesquisa").classList.add("hidden");
+      }
+
+      let timeoutBusca = null;
+
+      async function executarBusca() {
+        clearTimeout(timeoutBusca);
+
+        const termo = document
+          .getElementById("inputBusca")
+          .value.trim()
+          .toUpperCase();
+        const listaResultados = document.getElementById("listaResultados");
+
+        if (!termo) {
+          listaResultados.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs"><i class="fa-solid fa-clipboard text-2xl mb-2 text-slate-300"></i><p>Digite algo para pesquisar os serviços salvos.</p></div>`;
+          return;
+        }
+
+        listaResultados.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-lg mb-2"></i><p>Buscando ordens...</p></div>`;
+
+        timeoutBusca = setTimeout(async () => {
+          let ordens = [];
+
+          if (navigator.onLine) {
+            try {
+              let query = supabaseClient
+                .from("ordens_servico")
+                .select("*")
+                .order("id", { ascending: false })
+                .limit(20);
+
+              if (!isNaN(termo)) {
+                query = query.eq("id", parseInt(termo));
+              } else {
+                query = query.ilike("nome", `%${termo}%`);
+              }
+
+              const { data, error } = await query;
+              if (!error && data) {
+                ordens = data.map((item) => ({
+                  id: item.id || "Nuvem",
+                  dados: item,
+                  fotosUrls: item.fotos_urls || [],
+                }));
+              }
+            } catch (e) {
+              console.error("Erro ao buscar no Supabase", e);
+            }
+          }
+
+          const pendentes = JSON.parse(
+            localStorage.getItem("@osfacil_pendentes") || "[]",
+          );
+          pendentes.forEach((p) => {
+            const matchNome = p.dados.nome && p.dados.nome.includes(termo);
+            const matchId = p.idTemp.toString().includes(termo);
+            if (matchNome || matchId) {
+              ordens.push({
+                id: `Local #${p.idTemp}`,
+                dados: p.dados,
+                fotosUrls: p.fotos.map((f) => f.base64),
+              });
+            }
+          });
+
+          if (ordens.length === 0) {
+            listaResultados.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs"><i class="fa-solid fa-face-frown text-2xl mb-2 text-slate-300"></i><p>Nenhuma ordem de serviço encontrada.</p></div>`;
+            return;
+          }
+
+          listaResultados.innerHTML = "";
+          ordens.forEach((os) => {
+            const d = os.dados;
+            const card = document.createElement("div");
+            card.className =
+              "bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex flex-col gap-2";
+
+            let fotosHtml = "";
+            if (os.fotosUrls && os.fotosUrls.length > 0) {
+              fotosHtml = `<div class="flex gap-1.5 overflow-x-auto py-1">`;
+              const fotosArrayString = JSON.stringify(os.fotosUrls).replace(
+                /"/g,
+                "&quot;",
+              );
+              os.fotosUrls.forEach((url, idx) => {
+                fotosHtml += `<img src="${url}" onclick="abrirModalImagens(${fotosArrayString}, ${idx})" class="w-14 h-14 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-80 flex-shrink-0" />`;
+              });
+              fotosHtml += `</div>`;
+            } else {
+              fotosHtml = `<span class="text-[10px] text-slate-400 italic">Sem fotos registradas.</span>`;
+            }
+
+            card.innerHTML = `
+              <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">ID: ${os.id}</span>
+                <span class="text-[11px] font-bold text-slate-800">${d.servico} (Qtd: ${d.quantidade})</span>
+              </div>
+              <div class="text-[11px] text-slate-600 flex flex-col gap-0.5">
+                <div><strong>Cliente:</strong> ${d.nome}</div>
+                <div><strong>Telefone:</strong> ${d.telefone}</div>
+                <div><strong>Valor:</strong> R$ ${Number(d.valor).toFixed(2).replace(".", ",")}</div>
+                <div><strong>Obs:</strong> ${d.observacao}</div>
+              </div>
+              <div class="mt-1">
+                <span class="text-[10px] font-bold text-slate-500 block mb-1">Imagens do Serviço:</span>
+                ${fotosHtml}
+              </div>
+            `;
+            listaResultados.appendChild(card);
+          });
+        }, 500);
+      }
+
+      function abrirModalImagens(arrayFotos, indexInicial) {
+        galeriaAtual = arrayFotos;
+        indexFotoAtual = indexInicial;
+
+        document.getElementById("modalImagens").classList.remove("hidden");
+        atualizarCarrossel();
+      }
+
+      function fecharModalImagens() {
+        document.getElementById("modalImagens").classList.add("hidden");
+      }
+
+      function navegarImagem(direcao) {
+        indexFotoAtual += direcao;
+        if (indexFotoAtual >= galeriaAtual.length) indexFotoAtual = 0;
+        if (indexFotoAtual < 0) indexFotoAtual = galeriaAtual.length - 1;
+        atualizarCarrossel();
+      }
+
+      function atualizarCarrossel() {
+        const img = document.getElementById("imagemAmpliada");
+        const contador = document.getElementById("contadorFotoModal");
+        const btnPrev = document.getElementById("btnPrev");
+        const btnNext = document.getElementById("btnNext");
+
+        img.style.opacity = 0;
+
+        setTimeout(() => {
+          img.src = galeriaAtual[indexFotoAtual];
+          contador.textContent = `${indexFotoAtual + 1} / ${galeriaAtual.length}`;
+          img.style.opacity = 1;
+        }, 150);
+
+        if (galeriaAtual.length > 1) {
+          btnPrev.classList.remove("hidden");
+          btnNext.classList.remove("hidden");
+        } else {
+          btnPrev.classList.add("hidden");
+          btnNext.classList.add("hidden");
+        }
+      }
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const areaImagem = document.getElementById("areaImagem");
+
+      areaImagem.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        { passive: true },
+      );
+
+      areaImagem.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          processarSwipe();
+        },
+        { passive: true },
+      );
+
+      function processarSwipe() {
+        const limite = 50;
+        if (touchEndX < touchStartX - limite) {
+          navegarImagem(1);
+        }
+        if (touchEndX > touchStartX + limite) {
+          navegarImagem(-1);
+        }
+      }
+
+      setInterval(sincronizarPendentes, 15000);
+      window.addEventListener("online", () => {
+        mostrarToast("Internet voltou! Sincronizando...", "sucesso");
+        sincronizarPendentes();
+      });
+
+      renderFotos();
+      atualizarProgresso();
+      setTimeout(sincronizarPendentes, 2000);
+    </script>
+  </body>
+</html>
