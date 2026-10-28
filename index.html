@@ -7,7 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
     <meta name="theme-color" content="#172033" />
-    <meta name="color-scheme" content="light dark" />
     <title>OS Fácil - Pré-Cadastro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -19,9 +18,6 @@
       rel="stylesheet"
     />
     <style>
-      :root {
-        color-scheme: light dark;
-      }
       * {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
@@ -151,6 +147,7 @@
         font-size: 14px;
         outline: none;
         transition: border-color 0.15s, box-shadow 0.15s;
+        caret-color: #38bdf8;
       }
       .field:focus {
         border-color: #435edb;
@@ -210,17 +207,58 @@
         color: #ef4444;
       }
 
-      select#paisDDI {
+      /* NOVO BOTÃO DE DDI (SUBSTITUI O SELECT NATIVO) */
+      .btn-ddi {
         width: 100px;
-        padding: 0 5px;
-        text-align: center;
+        height: 44px;
+        padding: 0 8px;
+        border: 1px solid #dce2eb;
+        border-radius: 9px;
+        background: white;
+        color: #172033;
+        font-size: 14px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
-        appearance: none;
-        background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2394a3b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
-        background-repeat: no-repeat;
-        background-position: right 5px center;
-        background-size: 10px;
+        transition: border-color 0.15s, background 0.15s;
+      }
+      .btn-ddi:active {
+        background: #f1f5f9;
+      }
+
+      .fake-select {
+        width: 100%;
+        min-width: 0;
+        height: 44px;
+        padding: 0 12px;
+        border: 1px solid #dce2eb;
+        border-radius: 9px;
+        background: white;
+        color: #172033;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+      }
+      .fake-select::after {
+        content: '\f107';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        right: 12px;
+        color: #94a3b8;
+        font-size: 14px;
+      }
+      .fake-select.is-invalid {
+        border-color: #ef4444;
+        background: #fef2f2;
+      }
+      .fake-select.is-valid {
+        border-color: #86efac;
+        background: #f0fdf4;
       }
 
       .photo-section {
@@ -348,7 +386,7 @@
       }
 
       @media (min-width: 768px) {
-        .field {
+        .field, .fake-select, .btn-ddi {
           height: 48px;
           font-size: 15px;
         }
@@ -373,7 +411,7 @@
         .photo-section {
           padding: 10px;
         }
-        .field {
+        .field, .fake-select, .btn-ddi {
           height: 38px;
           font-size: 13px;
         }
@@ -392,9 +430,73 @@
         }
       }
 
-      /* =========================================
-         REGRAS PARA O MODO ESCURO AUTOMÁTICO
-         ========================================= */
+      .modal-custom {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s;
+      }
+      .modal-custom.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-box {
+        background: white;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        max-height: 80vh;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        transform: scale(0.95);
+        transition: 0.2s;
+      }
+      .modal-custom.show .modal-box {
+        transform: scale(1);
+      }
+      .modal-header {
+        padding: 16px;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        color: #172033;
+      }
+      .modal-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px;
+      }
+      .modal-item {
+        padding: 14px;
+        border-bottom: 1px solid #f1f5f9;
+        cursor: pointer;
+        font-size: 15px;
+        color: #334155;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-item:active {
+        background: #f1f5f9;
+      }
+      .modal-item.selected {
+        background: #eff6ff;
+        color: #2563eb;
+        font-weight: 700;
+      }
+
       @media (prefers-color-scheme: dark) {
         body, .app, .app-main, .app-footer {
           background-color: #0b0f17 !important;
@@ -402,53 +504,38 @@
         .app-footer {
           border-top-color: #1e293b !important;
         }
-        
-        .form-card, .photo-section {
+        .form-card, .photo-section, .modal-box {
           background-color: #1e293b !important;
           border-color: #334155 !important;
         }
-
-        .field {
+        .field, .fake-select, .btn-ddi {
           background-color: #0f172a !important;
-          color: #ffffff !important; 
-          border-color: #475569 !important; 
+          color: #ffffff !important;
+          border-color: #475569 !important;
+          caret-color: #38bdf8 !important;
         }
         .field:focus {
           border-color: #38bdf8 !important;
         }
-        
-        select.field {
-          color: #ffffff !important;
-          background-color: #0f172a !important;
-        }
-        select.field option {
-          background-color: #1e293b !important;
-          color: #ffffff !important;
-          padding: 10px;
-        }
-
         .field::placeholder {
-          color: #94a3b8 !important; 
+          color: #94a3b8 !important;
         }
         .field-wrap .field-icon {
           color: #64748b !important;
         }
-        
         .field-label, .card-body h2 {
-          color: #e2e8f0 !important; 
+          color: #e2e8f0 !important;
         }
         .field-hint {
           color: #94a3b8 !important;
         }
-        
         .photo-slot {
           background-color: #0f172a !important;
           border-color: #475569 !important;
         }
         .photo-add {
-          color: #cbd5e1 !important; 
+          color: #cbd5e1 !important;
         }
-        
         #modalPesquisa > div {
           background-color: #1e293b !important;
         }
@@ -462,6 +549,22 @@
         .text-slate-600, .text-slate-800 {
           color: #cbd5e1 !important;
         }
+        .modal-header {
+          background: #0f172a !important;
+          border-color: #334155 !important;
+          color: white;
+        }
+        .modal-item {
+          color: #cbd5e1 !important;
+          border-color: #334155 !important;
+        }
+        .modal-item:active {
+          background: #1e293b;
+        }
+        .modal-item.selected {
+          background: #1e3a8a !important;
+          color: #93c5fd !important;
+        }
       }
     </style>
   </head>
@@ -470,6 +573,17 @@
       id="toast-container"
       class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[500px] mx-auto"
     ></div>
+
+    <!-- MODAL CUSTOMIZADO DE OPÇÕES (SERVIÇO, QUANTIDADE E DDI) -->
+    <div id="customModal" class="modal-custom" onclick="fecharModalOpcoes(event)">
+      <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <span id="modalTitle">Selecione</span>
+          <button onclick="fecharModalOpcoes()" style="background:none; border:none; font-size:20px; color:#94a3b8;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="modalList" class="modal-list"></div>
+      </div>
+    </div>
 
     <!-- MODAL DE PESQUISA -->
     <div
@@ -639,12 +753,16 @@
               </div>
             </div>
             <div>
-              <label for="telefone" class="field-label">Telefone (Opcional)</label>
+              <label for="telefone" class="field-label"
+                >Telefone (Opcional)</label
+              >
               <div class="flex gap-2">
-                <select id="paisDDI" class="field">
-                  <option value="+55" selected>🇧🇷 +55</option>
-                  <option value="+595">🇵🇾 +595</option>
-                </select>
+                <!-- BOTÃO DE DDI SUBSTITUINDO O SELECT -->
+                <input type="hidden" id="paisDDI" value="+55" />
+                <button type="button" id="btnDDI" class="btn-ddi" onclick="alternarDDI()">
+                  🇧🇷 +55
+                </button>
+                
                 <div class="field-wrap">
                   <i class="fa-solid fa-phone field-icon"></i>
                   <input
@@ -679,34 +797,15 @@
                 <label for="servico" class="field-label"
                   >Serviço <span class="req">*</span></label
                 >
-                <select id="servico" name="servico" class="field" required>
-                  <option value="">Selec.</option>
-                  <option value="Alinhamento">Alinhamento</option>
-                  <option value="Conserto">Conserto</option>
-                  <option value="Escapamento">Escapamento</option>
-                  <option value="Mecanica">Mecanica</option>
-                  <option value="Reforma">Reforma</option>
-                  <option value="Solda">Solda</option>
-                </select>
+                <input type="hidden" id="servico" name="servico" required />
+                <input type="hidden" id="quantidade" name="quantidade" required />
+                <div id="fakeServico" class="fake-select" onclick="abrirModalOpcoes('servico')">Selec.</div>
               </div>
               <div>
-                <label for="quantidade" class="field-label"
+                <label for="quantidadeFake" class="field-label"
                   >Qtd <span class="req">*</span></label
                 >
-                <select
-                  id="quantidade"
-                  name="quantidade"
-                  class="field"
-                  required
-                >
-                  <option value="">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
+                <div id="fakeQuantidadeVisivel" class="fake-select" onclick="abrirModalOpcoes('quantidade')">0</div>
               </div>
               <div>
                 <label for="valor" class="field-label"
@@ -716,7 +815,7 @@
                   id="valor"
                   name="valor"
                   class="field"
-                  type="text"
+                  type="tel"
                   placeholder="R$ 0,00"
                   required
                 />
@@ -789,11 +888,19 @@
       const photoGrid = document.getElementById("photoGrid");
       const photoCount = document.getElementById("photoCount");
       const photoSection = document.getElementById("photoSection");
-      const paisDDI = document.getElementById("paisDDI");
+      
+      // NOVOS ELEMENTOS DO DDI
+      const paisDDI = document.getElementById("paisDDI"); // Agora é um input hidden
+      const btnDDI = document.getElementById("btnDDI");
+      
       const telefone = document.getElementById("telefone");
       const nome = document.getElementById("nome");
-      const servico = document.getElementById("servico");
-      const quantidade = document.getElementById("quantidade");
+      
+      const inputServico = document.getElementById("servico");
+      const inputQuantidade = document.getElementById("quantidade");
+      const fakeServico = document.getElementById("fakeServico");
+      const fakeQuantidade = document.getElementById("fakeQuantidadeVisivel");
+
       const valor = document.getElementById("valor");
       const observacao = document.getElementById("observacao");
       const submitButton = document.getElementById("submitButton");
@@ -801,6 +908,81 @@
       let fotos = [];
       let galeriaAtual = [];
       let indexFotoAtual = 0;
+
+      // ==========================================
+      // FUNÇÃO PARA ALTERNAR O DDI (SEM TELA BRANCA)
+      // ==========================================
+      function alternarDDI() {
+        if (paisDDI.value === "+55") {
+          paisDDI.value = "+595";
+          btnDDI.innerHTML = "🇵🇾 +595";
+          telefone.placeholder = "(000) 000-000";
+        } else {
+          paisDDI.value = "+55";
+          btnDDI.innerHTML = "🇧🇷 +55";
+          telefone.placeholder = "(00) 00000-0000";
+        }
+        telefone.value = ""; // Limpa o telefone ao trocar o país
+        aplicarMascaraTelefone();
+      }
+
+      // ==========================================
+      // MODAL CUSTOMIZADO
+      // ==========================================
+      const opcoesServico = ["Alinhamento", "Conserto", "Escapamento", "Mecanica", "Reforma", "Solda"];
+      const opcoesQuantidade = ["1", "2", "3", "4", "5", "6"];
+      let campoAtivoModal = "";
+
+      function abrirModalOpcoes(campo) {
+        campoAtivoModal = campo;
+        const modal = document.getElementById("customModal");
+        const titulo = document.getElementById("modalTitle");
+        const lista = document.getElementById("modalList");
+        
+        const opcoes = campo === "servico" ? opcoesServico : opcoesQuantidade;
+        const valorAtual = campo === "servico" ? inputServico.value : inputQuantidade.value;
+
+        titulo.innerText = campo === "servico" ? "Selecione o Serviço" : "Selecione a Quantidade";
+        lista.innerHTML = "";
+
+        opcoes.forEach(opt => {
+          const div = document.createElement("div");
+          div.className = `modal-item ${valorAtual === opt ? 'selected' : ''}`;
+          div.innerHTML = `<span>${opt}</span> ${valorAtual === opt ? '<i class="fa-solid fa-check"></i>' : ''}`;
+          div.onclick = () => selecionarOpcao(opt);
+          lista.appendChild(div);
+        });
+
+        modal.classList.add("show");
+      }
+
+      function fecharModalOpcoes(event) {
+        if (event && event.target !== document.getElementById("customModal")) return;
+        document.getElementById("customModal").classList.remove("show");
+      }
+
+      function selecionarOpcao(valorSelecionado) {
+        if (campoAtivoModal === "servico") {
+          inputServico.value = valorSelecionado;
+          fakeServico.innerText = valorSelecionado;
+          validarServico();
+          
+          const tabelaPrecos = { Alinhamento: 50, Solda: 100, Conserto: 150, Escapamento: 200, Mecanica: 200, Reforma: 200 };
+          if (tabelaPrecos[valorSelecionado]) {
+            inputQuantidade.value = "1";
+            fakeQuantidade.innerText = "1";
+            valor.value = (tabelaPrecos[valorSelecionado] * 100).toString();
+            valor.dispatchEvent(new Event("input"));
+            validarQuantidade();
+          }
+        } else {
+          inputQuantidade.value = valorSelecionado;
+          fakeQuantidade.innerText = valorSelecionado;
+          validarQuantidade();
+        }
+        fecharModalOpcoes();
+        atualizarProgresso();
+      }
 
       function mostrarToast(mensagem, tipo = "sucesso") {
         const container = document.getElementById("toast-container");
@@ -963,7 +1145,7 @@
           atualizarProgresso();
           return;
         }
-        
+
         if (paisDDI.value === "+55") {
           numero = numero.slice(0, 11);
           if (numero.length > 10) {
@@ -992,13 +1174,6 @@
 
       telefone.addEventListener("input", aplicarMascaraTelefone);
 
-      paisDDI.addEventListener("change", () => {
-        telefone.value = "";
-        telefone.placeholder =
-          paisDDI.value === "+55" ? "(00) 00000-0000" : "(000) 000-000";
-        aplicarMascaraTelefone();
-      });
-
       valor.addEventListener("input", (e) => {
         let v = e.target.value.replace(/\D/g, "");
         v = (v / 100).toFixed(2) + "";
@@ -1007,27 +1182,6 @@
         v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
         e.target.value = "R$ " + v;
         validarValor();
-        atualizarProgresso();
-      });
-
-      servico.addEventListener("change", () => {
-        const tabelaPrecos = {
-          Alinhamento: 50,
-          Solda: 100,
-          Conserto: 150,
-          Escapamento: 200,
-          Mecanica: 200,
-          Reforma: 200,
-        };
-        const preco = tabelaPrecos[servico.value];
-        if (preco) {
-          quantidade.value = "1";
-          valor.value = (preco * 100).toString();
-          valor.dispatchEvent(new Event("input"));
-          validarQuantidade();
-          validarValor();
-        }
-        validarServico();
         atualizarProgresso();
       });
 
@@ -1046,27 +1200,34 @@
         let valido = true;
 
         if (digitos.length > 0) {
-          valido = paisDDI.value === "+55"
-            ? digitos.length === 10 || digitos.length === 11
-            : digitos.length === 9;
+          valido =
+            paisDDI.value === "+55"
+              ? digitos.length === 10 || digitos.length === 11
+              : digitos.length === 9;
         }
 
         telefone.classList.toggle("is-invalid", !valido && digitos.length > 0);
         telefone.classList.toggle("is-valid", valido && digitos.length > 0);
-        
+
         const icone = document.getElementById("statusTelefone");
         if (icone) {
-          icone.style.display = (valido && digitos.length > 0) ? "block" : "none";
+          icone.style.display = valido && digitos.length > 0 ? "block" : "none";
         }
-        
+
         return valido;
       }
 
       function validarServico() {
-        return servico.value !== "";
+        const ok = inputServico.value !== "";
+        fakeServico.classList.toggle("is-invalid", !ok);
+        fakeServico.classList.toggle("is-valid", ok);
+        return ok;
       }
       function validarQuantidade() {
-        return quantidade.value !== "";
+        const ok = inputQuantidade.value !== "";
+        fakeQuantidade.classList.toggle("is-invalid", !ok);
+        fakeQuantidade.classList.toggle("is-valid", ok);
+        return ok;
       }
       function validarValor() {
         const temValor = valor.value.replace(/\D/g, "").length > 0;
@@ -1116,10 +1277,6 @@
         validarNome();
         atualizarProgresso();
       });
-      quantidade.addEventListener("change", () => {
-        validarQuantidade();
-        atualizarProgresso();
-      });
       observacao.addEventListener("input", () => {
         validarObservacao();
         atualizarProgresso();
@@ -1167,10 +1324,15 @@
             !os.dados.observacao ||
             os.fotos.length === 0
           ) {
-            // Removida a obrigatoriedade do telefone na verificação de OS válida
-            if(!os.dados.valor || !os.dados.observacao || os.fotos.length === 0) {
-                console.warn("OS inválida encontrada no armazenamento. Ignorando...");
-                continue;
+            if (
+              !os.dados.valor ||
+              !os.dados.observacao ||
+              os.fotos.length === 0
+            ) {
+              console.warn(
+                "OS inválida encontrada no armazenamento. Ignorando...",
+              );
+              continue;
             }
           }
           try {
@@ -1238,9 +1400,11 @@
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
-        
+
         const telValor = telefone.value.trim();
-        const telefoneCompleto = telValor ? `${paisDDI.value} ${telValor}` : "SEM CONTATO";
+        const telefoneCompleto = telValor
+          ? `${paisDDI.value} ${telValor}`
+          : "SEM CONTATO";
 
         let nomeFinal =
           nome.value.trim() === ""
@@ -1250,8 +1414,8 @@
         const cadastro = {
           nome: nomeFinal,
           telefone: telefoneCompleto,
-          servico: servico.value.toUpperCase(),
-          quantidade: parseInt(quantidade.value),
+          servico: inputServico.value.toUpperCase(),
+          quantidade: parseInt(inputQuantidade.value),
           valor: valorNumerico,
           observacao: observacao.value.trim().toUpperCase(),
         };
@@ -1261,8 +1425,13 @@
 
         form.reset();
         paisDDI.value = "+55";
+        btnDDI.innerHTML = "🇧🇷 +55";
         telefone.placeholder = "(00) 00000-0000";
         valor.value = "";
+        
+        inputServico.value = ""; fakeServico.innerText = "Selec.";
+        inputQuantidade.value = ""; fakeQuantidade.innerText = "0";
+        
         fotos = [];
         renderFotos();
         photoSection.classList.remove("has-error");
@@ -1395,7 +1564,12 @@
               fotosHtml = `<span class="text-[10px] text-slate-400 italic">Sem fotos registradas.</span>`;
             }
 
-            const telefoneExibir = d.telefone && d.telefone.trim() !== "+55" && d.telefone.trim() !== "" ? d.telefone : "Sem contato";
+            const telefoneExibir =
+              d.telefone &&
+              d.telefone.trim() !== "+55" &&
+              d.telefone.trim() !== ""
+                ? d.telefone
+                : "Sem contato";
 
             card.innerHTML = `
               <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
