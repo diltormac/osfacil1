@@ -106,9 +106,7 @@
         border: 1px solid #e6eaf0;
         border-radius: 12px;
         background: white;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
       }
       .form-card.has-error {
         border-color: #ef4444;
@@ -148,9 +146,7 @@
         color: #172033;
         font-size: 14px;
         outline: none;
-        transition:
-          border-color 0.15s,
-          box-shadow 0.15s;
+        transition: border-color 0.15s, box-shadow 0.15s;
         caret-color: #38bdf8;
       }
       .field:focus {
@@ -225,9 +221,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition:
-          border-color 0.15s,
-          background 0.15s;
+        transition: border-color 0.15s, background 0.15s;
       }
       .btn-ddi:active {
         background: #f1f5f9;
@@ -249,8 +243,8 @@
         position: relative;
       }
       .fake-select::after {
-        content: "\f107";
-        font-family: "Font Awesome 6 Free";
+        content: '\f107';
+        font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         position: absolute;
         right: 12px;
@@ -293,9 +287,7 @@
         border: 1px dashed #c7cfdd;
         border-radius: 9px;
         background: #f7f9fc;
-        transition:
-          border-color 0.2s,
-          background 0.2s;
+        transition: border-color 0.2s, background 0.2s;
       }
       .photo-slot:hover {
         border-color: #435edb;
@@ -372,9 +364,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition:
-          background 0.15s,
-          transform 0.1s;
+        transition: background 0.15s, transform 0.1s;
       }
       .submit-button:active {
         background: #334bc0;
@@ -395,9 +385,7 @@
       }
 
       @media (min-width: 768px) {
-        .field,
-        .fake-select,
-        .btn-ddi {
+        .field, .fake-select, .btn-ddi {
           height: 48px;
           font-size: 15px;
         }
@@ -422,9 +410,7 @@
         .photo-section {
           padding: 10px;
         }
-        .field,
-        .fake-select,
-        .btn-ddi {
+        .field, .fake-select, .btn-ddi {
           height: 38px;
           font-size: 13px;
         }
@@ -511,24 +497,17 @@
       }
 
       @media (prefers-color-scheme: dark) {
-        body,
-        .app,
-        .app-main,
-        .app-footer {
+        body, .app, .app-main, .app-footer {
           background-color: #0b0f17 !important;
         }
         .app-footer {
           border-top-color: #1e293b !important;
         }
-        .form-card,
-        .photo-section,
-        .modal-box {
+        .form-card, .photo-section, .modal-box {
           background-color: #1e293b !important;
           border-color: #334155 !important;
         }
-        .field,
-        .fake-select,
-        .btn-ddi {
+        .field, .fake-select, .btn-ddi {
           background-color: #0f172a !important;
           color: #ffffff !important;
           border-color: #475569 !important;
@@ -543,8 +522,7 @@
         .field-wrap .field-icon {
           color: #64748b !important;
         }
-        .field-label,
-        .card-body h2 {
+        .field-label, .card-body h2 {
           color: #e2e8f0 !important;
         }
         .field-hint {
@@ -564,12 +542,10 @@
           background-color: #1e293b !important;
           color: #f8fafc !important;
         }
-        .bg-slate-50,
-        .bg-slate-100 {
+        .bg-slate-50, .bg-slate-100 {
           background-color: #0f172a !important;
         }
-        .text-slate-600,
-        .text-slate-800 {
+        .text-slate-600, .text-slate-800 {
           color: #cbd5e1 !important;
         }
         .modal-header {
@@ -597,25 +573,37 @@
       class="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pointer-events-none px-4 max-w-[500px] mx-auto"
     ></div>
 
-    <div
-      id="customModal"
-      class="modal-custom"
-      onclick="fecharModalOpcoes(event)"
-    >
+    <!-- MODAL DE IDENTIFICAÇÃO DO APARELHO (NOVO) -->
+    <div id="modalIdentificacao" class="modal-custom" style="z-index: 2000;">
+      <div class="modal-box">
+        <div class="modal-header">
+          <span>Identificação do Aparelho</span>
+        </div>
+        <div style="padding: 20px;">
+          <p style="font-size: 13px; color: #475569; margin-bottom: 12px; text-align: center;">
+            Para começar, dê um nome a este aparelho (Ex: Tablet Recepção, Celular João).
+          </p>
+          <input 
+            type="text" 
+            id="inputNomeAparelho" 
+            class="field" 
+            placeholder="Digite o nome do aparelho"
+            style="text-align: center;"
+          />
+        </div>
+        <div style="padding: 16px; border-top: 1px solid #e2e8f0; background: #f8fafc;">
+          <button onclick="salvarIdentificacao()" class="submit-button" style="height: 44px; font-size: 14px;">
+            Confirmar e Entrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="customModal" class="modal-custom" onclick="fecharModalOpcoes(event)">
       <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-header">
           <span id="modalTitle">Selecione</span>
-          <button
-            onclick="fecharModalOpcoes()"
-            style="
-              background: none;
-              border: none;
-              font-size: 20px;
-              color: #94a3b8;
-            "
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+          <button onclick="fecharModalOpcoes()" style="background:none; border:none; font-size:20px; color:#94a3b8;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="modalList" class="modal-list"></div>
       </div>
@@ -735,8 +723,10 @@
           </div>
           <div class="min-w-0">
             <h1 class="text-base font-bold leading-tight">OS Fácil</h1>
-            <p class="mt-1 text-[10px] text-slate-300">
-              Pré-cadastro de serviço
+            <p class="mt-1 text-[10px] text-slate-300 flex items-center gap-1 cursor-pointer hover:text-white transition" onclick="alterarNomeAparelho()">
+              <i class="fa-solid fa-mobile-screen text-[9px]"></i>
+              <span id="nomeAparelhoDisplay">Carregando...</span>
+              <i class="fa-solid fa-pen text-[8px] ml-1 opacity-50"></i>
             </p>
           </div>
           <div class="ml-auto flex items-center gap-2">
@@ -792,15 +782,10 @@
               >
               <div class="flex gap-2">
                 <input type="hidden" id="paisDDI" value="+55" />
-                <button
-                  type="button"
-                  id="btnDDI"
-                  class="btn-ddi"
-                  onclick="alternarDDI()"
-                >
+                <button type="button" id="btnDDI" class="btn-ddi" onclick="alternarDDI()">
                   🇧🇷 +55
                 </button>
-
+                
                 <div class="field-wrap">
                   <i class="fa-solid fa-phone field-icon"></i>
                   <input
@@ -836,31 +821,14 @@
                   >Serviço <span class="req">*</span></label
                 >
                 <input type="hidden" id="servico" name="servico" required />
-                <input
-                  type="hidden"
-                  id="quantidade"
-                  name="quantidade"
-                  required
-                />
-                <div
-                  id="fakeServico"
-                  class="fake-select"
-                  onclick="abrirModalOpcoes('servico')"
-                >
-                  Selec.
-                </div>
+                <input type="hidden" id="quantidade" name="quantidade" required />
+                <div id="fakeServico" class="fake-select" onclick="abrirModalOpcoes('servico')">Selec.</div>
               </div>
               <div>
                 <label for="quantidadeFake" class="field-label"
                   >Qtd <span class="req">*</span></label
                 >
-                <div
-                  id="fakeQuantidadeVisivel"
-                  class="fake-select"
-                  onclick="abrirModalOpcoes('quantidade')"
-                >
-                  0
-                </div>
+                <div id="fakeQuantidadeVisivel" class="fake-select" onclick="abrirModalOpcoes('quantidade')">0</div>
               </div>
               <div>
                 <label for="valor" class="field-label"
@@ -942,13 +910,13 @@
       const photoGrid = document.getElementById("photoGrid");
       const photoCount = document.getElementById("photoCount");
       const photoSection = document.getElementById("photoSection");
-
+      
       const paisDDI = document.getElementById("paisDDI");
       const btnDDI = document.getElementById("btnDDI");
-
+      
       const telefone = document.getElementById("telefone");
       const nome = document.getElementById("nome");
-
+      
       const inputServico = document.getElementById("servico");
       const inputQuantidade = document.getElementById("quantidade");
       const fakeServico = document.getElementById("fakeServico");
@@ -961,8 +929,51 @@
       let fotos = [];
       let galeriaAtual = [];
       let indexFotoAtual = 0;
-      let isSaving = false; // TRAVA PARA EVITAR DUPLICIDADE
+      let isSaving = false;
+      let nomeAparelho = localStorage.getItem("@osfacil_aparelho");
 
+      // ==========================================
+      // LÓGICA DA TELA DE IDENTIFICAÇÃO (NOVO)
+      // ==========================================
+      function verificarIdentificacaoAparelho() {
+        if (!nomeAparelho || nomeAparelho.trim() === "" || nomeAparelho === "undefined" || nomeAparelho === "null") {
+          // Se não tem nome, mostra o modal customizado
+          document.getElementById("modalIdentificacao").classList.add("show");
+          document.getElementById("inputNomeAparelho").focus();
+        } else {
+          // Se já tem nome, apenas exibe no topo
+          document.getElementById("nomeAparelhoDisplay").innerText = nomeAparelho;
+        }
+      }
+
+      function salvarIdentificacao() {
+        let inputVal = document.getElementById("inputNomeAparelho").value.trim();
+        
+        if (inputVal === "") {
+          alert("Por favor, digite um nome válido.");
+          return;
+        }
+        
+        nomeAparelho = inputVal.toUpperCase();
+        localStorage.setItem("@osfacil_aparelho", nomeAparelho);
+        document.getElementById("nomeAparelhoDisplay").innerText = nomeAparelho;
+        document.getElementById("modalIdentificacao").classList.remove("show");
+        mostrarToast("Aparelho identificado com sucesso!", "sucesso");
+      }
+
+      function alterarNomeAparelho() {
+        // Abre o mesmo modal para alterar o nome
+        document.getElementById("modalIdentificacao").classList.add("show");
+        document.getElementById("inputNomeAparelho").value = nomeAparelho || "";
+        document.getElementById("inputNomeAparelho").focus();
+      }
+
+      // Chama a verificação assim que o app abre
+      verificarIdentificacaoAparelho();
+
+      // ==========================================
+      // DEMAIS FUNÇÕES (MANTIDAS)
+      // ==========================================
       function alternarDDI() {
         if (paisDDI.value === "+55") {
           paisDDI.value = "+595";
@@ -977,14 +988,7 @@
         aplicarMascaraTelefone();
       }
 
-      const opcoesServico = [
-        "Alinhamento",
-        "Conserto",
-        "Escapamento",
-        "Mecanica",
-        "Reforma",
-        "Solda",
-      ];
+      const opcoesServico = ["Alinhamento", "Conserto", "Escapamento", "Mecanica", "Reforma", "Solda"];
       const opcoesQuantidade = ["1", "2", "3", "4", "5", "6"];
       let campoAtivoModal = "";
 
@@ -993,21 +997,17 @@
         const modal = document.getElementById("customModal");
         const titulo = document.getElementById("modalTitle");
         const lista = document.getElementById("modalList");
-
+        
         const opcoes = campo === "servico" ? opcoesServico : opcoesQuantidade;
-        const valorAtual =
-          campo === "servico" ? inputServico.value : inputQuantidade.value;
+        const valorAtual = campo === "servico" ? inputServico.value : inputQuantidade.value;
 
-        titulo.innerText =
-          campo === "servico"
-            ? "Selecione o Serviço"
-            : "Selecione a Quantidade";
+        titulo.innerText = campo === "servico" ? "Selecione o Serviço" : "Selecione a Quantidade";
         lista.innerHTML = "";
 
-        opcoes.forEach((opt) => {
+        opcoes.forEach(opt => {
           const div = document.createElement("div");
-          div.className = `modal-item ${valorAtual === opt ? "selected" : ""}`;
-          div.innerHTML = `<span>${opt}</span> ${valorAtual === opt ? '<i class="fa-solid fa-check"></i>' : ""}`;
+          div.className = `modal-item ${valorAtual === opt ? 'selected' : ''}`;
+          div.innerHTML = `<span>${opt}</span> ${valorAtual === opt ? '<i class="fa-solid fa-check"></i>' : ''}`;
           div.onclick = () => selecionarOpcao(opt);
           lista.appendChild(div);
         });
@@ -1016,8 +1016,7 @@
       }
 
       function fecharModalOpcoes(event) {
-        if (event && event.target !== document.getElementById("customModal"))
-          return;
+        if (event && event.target !== document.getElementById("customModal")) return;
         document.getElementById("customModal").classList.remove("show");
       }
 
@@ -1026,15 +1025,8 @@
           inputServico.value = valorSelecionado;
           fakeServico.innerText = valorSelecionado;
           validarServico();
-
-          const tabelaPrecos = {
-            Alinhamento: 50,
-            Solda: 100,
-            Conserto: 150,
-            Escapamento: 200,
-            Mecanica: 200,
-            Reforma: 200,
-          };
+          
+          const tabelaPrecos = { Alinhamento: 50, Solda: 100, Conserto: 150, Escapamento: 200, Mecanica: 200, Reforma: 200 };
           if (tabelaPrecos[valorSelecionado]) {
             inputQuantidade.value = "1";
             fakeQuantidade.innerText = "1";
@@ -1386,21 +1378,12 @@
 
         for (const os of pendentes) {
           if (
-            !os.dados.telefone ||
             !os.dados.valor ||
             !os.dados.observacao ||
             os.fotos.length === 0
           ) {
-            if (
-              !os.dados.valor ||
-              !os.dados.observacao ||
-              os.fotos.length === 0
-            ) {
-              console.warn(
-                "OS inválida encontrada no armazenamento. Ignorando...",
-              );
-              continue;
-            }
+            console.warn("OS inválida encontrada no armazenamento. Ignorando...");
+            continue;
           }
           try {
             let urlsDasFotos = [];
@@ -1435,8 +1418,7 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
-
-        // TRAVA DE SEGURANÇA: Se já estiver salvando, ignora o clique
+        
         if (isSaving) return;
 
         const okNome = validarNome();
@@ -1465,12 +1447,11 @@
           return;
         }
 
-        // Ativa a trava
         isSaving = true;
         submitButton.disabled = true;
         submitButton.innerHTML =
           '<i class="fa-solid fa-spinner fa-spin"></i> PROCESSANDO...';
-
+          
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
@@ -1492,74 +1473,58 @@
           quantidade: parseInt(inputQuantidade.value),
           valor: valorNumerico,
           observacao: observacao.value.trim().toUpperCase(),
+          aparelho: nomeAparelho || "Aparelho Desconhecido",
         };
 
         const arquivosFotos = fotos.map((f) => f.arquivo);
-
-        // Envia para a nuvem ou salva offline
+        
         try {
           if (navigator.onLine) {
-            submitButton.innerHTML =
-              '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
-
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ENVIANDO...';
+            
             let urlsDasFotos = [];
             for (const arquivo of arquivosFotos) {
               const nomeArquivo = `${Date.now()}-${Math.random().toString(36).substring(2)}.jpeg`;
-              const { error: uploadError } = await supabaseClient.storage
-                .from("fotos-ordens")
-                .upload(nomeArquivo, arquivo);
+              const { error: uploadError } = await supabaseClient.storage.from("fotos-ordens").upload(nomeArquivo, arquivo);
               if (uploadError) throw new Error("Erro upload");
-              const { data: urlData } = supabaseClient.storage
-                .from("fotos-ordens")
-                .getPublicUrl(nomeArquivo);
+              const { data: urlData } = supabaseClient.storage.from("fotos-ordens").getPublicUrl(nomeArquivo);
               urlsDasFotos.push(urlData.publicUrl);
             }
-
+            
             const cadastroFinal = { ...cadastro, fotos_urls: urlsDasFotos };
-            const { error } = await supabaseClient
-              .from("ordens_servico")
-              .insert([cadastroFinal]);
+            const { error } = await supabaseClient.from("ordens_servico").insert([cadastroFinal]);
             if (error) throw error;
-
+            
             mostrarToast("Pré-cadastro enviado com sucesso!", "sucesso");
           } else {
             await salvarOSOffline(cadastro, arquivosFotos);
-            mostrarToast(
-              "Sem internet. Salvo no celular com segurança!",
-              "sucesso",
-            );
+            mostrarToast("Sem internet. Salvo no celular com segurança!", "sucesso");
           }
-
-          // Limpa o formulário SÓ SE SALVOU COM SUCESSO
+          
           form.reset();
           paisDDI.value = "+55";
           btnDDI.innerHTML = "🇧🇷 +55";
           telefone.placeholder = "(00) 00000-0000";
           valor.value = "";
-          inputServico.value = "";
-          fakeServico.innerText = "Selec.";
-          inputQuantidade.value = "";
-          fakeQuantidade.innerText = "0";
+          inputServico.value = ""; fakeServico.innerText = "Selec.";
+          inputQuantidade.value = ""; fakeQuantidade.innerText = "0";
           fotos = [];
           renderFotos();
           photoSection.classList.remove("has-error");
           atualizarProgresso();
+          
         } catch (error) {
           console.error(error);
           mostrarToast("Erro ao enviar. Tente novamente.", "erro");
-          // Se der erro, salva offline para não perder os dados
           await salvarOSOffline(cadastro, arquivosFotos);
           mostrarToast("Salvo no celular! Enviaremos depois.", "erro");
         } finally {
-          // Libera a trava e o botão
           isSaving = false;
           submitButton.disabled = false;
-          submitButton.innerHTML =
-            '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
+          submitButton.innerHTML = '<i class="fa-solid fa-check"></i> ENVIAR PRÉ-CADASTRO';
         }
       });
 
-      // ... (O restante das funções de pesquisa e modal de imagens continua igual)
       function abrirModalPesquisa() {
         document.getElementById("modalPesquisa").classList.remove("hidden");
         document.getElementById("inputBusca").focus();
