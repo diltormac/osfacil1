@@ -7,7 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
     <meta name="theme-color" content="#172033" />
-    <!-- ADICIONADO PARA O MODO ESCURO -->
     <meta name="color-scheme" content="light dark" />
     <title>OS Fácil - Pré-Cadastro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,6 +19,9 @@
       rel="stylesheet"
     />
     <style>
+      :root {
+        color-scheme: light dark;
+      }
       * {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
@@ -97,14 +99,14 @@
         min-height: 0;
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        padding: 10px 12px;
+        gap: 10px;
+        padding: 12px;
         overflow-y: auto;
       }
 
       .form-card {
         flex-shrink: 0;
-        padding: 10px;
+        padding: 14px;
         border: 1px solid #e6eaf0;
         border-radius: 12px;
         background: white;
@@ -122,16 +124,16 @@
         display: flex;
         align-items: center;
         gap: 4px;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         color: #465166;
-        font-size: 11px;
+        font-size: 13px;
         font-weight: 700;
       }
       .field-label .req {
         color: #ef4444;
       }
       .field-hint {
-        font-size: 9px;
+        font-size: 11px;
         color: #94a3b8;
         font-weight: 500;
         margin-left: auto;
@@ -140,13 +142,13 @@
       .field {
         width: 100%;
         min-width: 0;
-        height: 38px;
-        padding: 0 10px;
+        height: 44px;
+        padding: 0 12px;
         border: 1px solid #dce2eb;
         border-radius: 9px;
         background: white;
         color: #172033;
-        font-size: 12px;
+        font-size: 14px;
         outline: none;
         transition: border-color 0.15s, box-shadow 0.15s;
       }
@@ -163,9 +165,9 @@
         background: #f0fdf4;
       }
       textarea.field {
-        height: 52px;
-        min-height: 52px;
-        padding: 9px 10px;
+        height: 60px;
+        min-height: 60px;
+        padding: 12px;
         resize: none;
       }
       .field::placeholder {
@@ -178,14 +180,14 @@
         flex: 1;
       }
       .field-wrap .field {
-        padding-left: 32px;
+        padding-left: 36px;
       }
       .field-wrap .field-icon {
         position: absolute;
-        left: 10px;
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 12px;
+        font-size: 14px;
         color: #94a3b8;
         pointer-events: none;
         transition: color 0.15s;
@@ -195,10 +197,10 @@
       }
       .field-wrap .field-status {
         position: absolute;
-        right: 10px;
+        right: 12px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 12px;
+        font-size: 14px;
         pointer-events: none;
       }
       .field-status.ok {
@@ -209,7 +211,7 @@
       }
 
       select#paisDDI {
-        width: 95px;
+        width: 100px;
         padding: 0 5px;
         text-align: center;
         font-weight: 600;
@@ -225,7 +227,7 @@
         flex: none;
         display: flex;
         flex-direction: column;
-        padding: 10px;
+        padding: 14px;
         border: 1px solid #e6eaf0;
         border-radius: 12px;
         background: white;
@@ -238,7 +240,7 @@
       .photo-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 8px;
+        gap: 10px;
       }
       .photo-slot {
         position: relative;
@@ -270,13 +272,13 @@
         justify-content: center;
         gap: 5px;
         color: #78849a;
-        font-size: 10px;
+        font-size: 12px;
         cursor: pointer;
         border: none;
         background: transparent;
       }
       .photo-add i {
-        font-size: 20px;
+        font-size: 22px;
         color: #5268d8;
         transition: transform 0.2s;
       }
@@ -286,18 +288,18 @@
 
       .photo-remove {
         position: absolute;
-        top: 4px;
-        right: 4px;
+        top: 6px;
+        right: 6px;
         display: flex;
-        width: 25px;
-        height: 25px;
+        width: 28px;
+        height: 28px;
         align-items: center;
         justify-content: center;
         border: none;
         border-radius: 50%;
         background: #172033e8;
         color: white;
-        font-size: 11px;
+        font-size: 12px;
         cursor: pointer;
         transition: background 0.15s;
       }
@@ -309,16 +311,16 @@
         flex-shrink: 0;
         background: #f3f5f9;
         border-top: 1px solid #e2e8f0;
-        padding: 9px 12px calc(12px + env(safe-area-inset-bottom, 0px)) 12px;
+        padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px)) 14px;
       }
       .submit-button {
         width: 100%;
-        height: 46px;
+        height: 52px;
         border: none;
         border-radius: 11px;
         background: #435edb;
         color: white;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 700;
         cursor: pointer;
         display: flex;
@@ -347,22 +349,15 @@
 
       @media (min-width: 768px) {
         .field {
-          height: 44px;
-          font-size: 13px;
+          height: 48px;
+          font-size: 15px;
         }
         textarea.field {
-          height: 65px;
-          min-height: 65px;
-          font-size: 13px;
-        }
-        .photo-add span {
-          font-size: 12px;
-        }
-        .photo-add i {
-          font-size: 24px;
+          height: 70px;
+          min-height: 70px;
         }
         .field-label {
-          font-size: 12px;
+          font-size: 14px;
         }
       }
 
@@ -371,36 +366,35 @@
           padding: calc(9px + env(safe-area-inset-top, 0px)) 15px 9px 15px;
         }
         .app-main {
-          gap: 6px;
-          padding: 7px 10px;
+          gap: 8px;
+          padding: 8px 10px;
         }
         .form-card,
         .photo-section {
-          padding: 8px;
+          padding: 10px;
         }
         .field {
-          height: 34px;
-          font-size: 11px;
+          height: 38px;
+          font-size: 13px;
         }
         textarea.field {
-          height: 43px;
-          min-height: 43px;
+          height: 50px;
+          min-height: 50px;
         }
         .app-footer {
-          padding: 6px 10px calc(7px + env(safe-area-inset-bottom, 0px)) 10px;
+          padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px)) 10px;
         }
         .submit-button {
-          height: 41px;
-        }
-        .photo-grid {
-          gap: 5px;
+          height: 46px;
         }
         .field-label {
-          font-size: 10px;
+          font-size: 12px;
         }
       }
 
-      /* REGRAS PARA O MODO ESCURO AUTOMÁTICO */
+      /* =========================================
+         REGRAS PARA O MODO ESCURO AUTOMÁTICO
+         ========================================= */
       @media (prefers-color-scheme: dark) {
         body, .app, .app-main, .app-footer {
           background-color: #0b0f17 !important;
@@ -408,25 +402,53 @@
         .app-footer {
           border-top-color: #1e293b !important;
         }
+        
         .form-card, .photo-section {
           background-color: #1e293b !important;
           border-color: #334155 !important;
         }
+
         .field {
           background-color: #0f172a !important;
-          color: #f8fafc !important;
-          border-color: #334155 !important;
+          color: #ffffff !important; 
+          border-color: #475569 !important; 
         }
+        .field:focus {
+          border-color: #38bdf8 !important;
+        }
+        
+        select.field {
+          color: #ffffff !important;
+          background-color: #0f172a !important;
+        }
+        select.field option {
+          background-color: #1e293b !important;
+          color: #ffffff !important;
+          padding: 10px;
+        }
+
         .field::placeholder {
+          color: #94a3b8 !important; 
+        }
+        .field-wrap .field-icon {
           color: #64748b !important;
         }
-        .field-label, .card-body h2, .field-hint {
+        
+        .field-label, .card-body h2 {
+          color: #e2e8f0 !important; 
+        }
+        .field-hint {
           color: #94a3b8 !important;
         }
+        
         .photo-slot {
           background-color: #0f172a !important;
-          border-color: #334155 !important;
+          border-color: #475569 !important;
         }
+        .photo-add {
+          color: #cbd5e1 !important; 
+        }
+        
         #modalPesquisa > div {
           background-color: #1e293b !important;
         }
@@ -592,10 +614,10 @@
           <section class="form-card" id="cardCliente">
             <div class="mb-2 flex items-center gap-2">
               <i class="fa-solid fa-user text-xs text-indigo-600"></i>
-              <h2 class="text-xs font-bold text-slate-800">Dados do cliente</h2>
+              <h2 class="text-sm font-bold text-slate-800">Dados do cliente</h2>
               <span class="field-hint" id="hintCliente">1 de 3</span>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
               <label for="nome" class="field-label"
                 >Nome do cliente (Opcional)</label
               >
@@ -617,9 +639,7 @@
               </div>
             </div>
             <div>
-              <label for="telefone" class="field-label"
-                >Telefone <span class="req">*</span></label
-              >
+              <label for="telefone" class="field-label">Telefone (Opcional)</label>
               <div class="flex gap-2">
                 <select id="paisDDI" class="field">
                   <option value="+55" selected>🇧🇷 +55</option>
@@ -635,7 +655,6 @@
                     placeholder="(00) 00000-0000"
                     autocomplete="tel"
                     inputmode="tel"
-                    required
                   />
                   <i
                     class="fa-solid fa-circle-check field-status ok"
@@ -652,7 +671,7 @@
               <i
                 class="fa-solid fa-screwdriver-wrench text-xs text-indigo-600"
               ></i>
-              <h2 class="text-xs font-bold text-slate-800">Dados do serviço</h2>
+              <h2 class="text-sm font-bold text-slate-800">Dados do serviço</h2>
               <span class="field-hint" id="hintServico">2 de 3</span>
             </div>
             <div class="grid grid-cols-3 gap-2">
@@ -703,7 +722,7 @@
                 />
               </div>
             </div>
-            <div class="mt-2">
+            <div class="mt-3">
               <label for="observacao" class="field-label"
                 >Descrição do serviço <span class="req">*</span></label
               >
@@ -721,17 +740,17 @@
             <div class="mb-2 flex flex-shrink-0 items-center justify-between">
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-camera text-xs text-indigo-600"></i>
-                <h2 class="text-xs font-bold text-slate-800">
+                <h2 class="text-sm font-bold text-slate-800">
                   Fotos do serviço <span class="req">*</span>
                 </h2>
               </div>
               <span
                 id="photoCount"
-                class="rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-700"
+                class="rounded-full bg-indigo-50 px-2 py-1 text-[11px] font-bold text-indigo-700"
                 >0/6 fotos</span
               >
             </div>
-            <p class="mb-2 flex-shrink-0 text-[10px] text-slate-500">
+            <p class="mb-2 flex-shrink-0 text-[11px] text-slate-500">
               <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
               Adicione pelo menos 1 foto.
             </p>
@@ -755,7 +774,6 @@
     <!-- SCRIPTS DO SUPABASE E CAPACITOR -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      // Inicializa a câmera nativa do Capacitor, se disponível
       if (window.Capacitor && window.Capacitor.Plugins) {
         window.Camera = window.Capacitor.Plugins.Camera;
       }
@@ -802,7 +820,6 @@
         }, 4000);
       }
 
-      // COMPRESSÃO PARA NAVEGADOR
       function comprimirImagemWeb(arquivo) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -875,7 +892,6 @@
             adicionar.innerHTML = `<i class="fa-solid fa-camera"></i><span>Adicionar</span>`;
 
             adicionar.addEventListener("click", async () => {
-              // 1. CÂMERA NATIVA (APP ANDROID)
               if (window.Capacitor && window.Capacitor.isNativePlatform()) {
                 try {
                   const image = await Camera.getPhoto({
@@ -901,9 +917,7 @@
                   console.log("Erro na câmera nativa:", e);
                   alert("Erro ao abrir a câmera: " + (e.message || e));
                 }
-              }
-              // 2. NAVEGADOR WEB
-              else {
+              } else {
                 const input = document.createElement("input");
                 input.type = "file";
                 input.accept = "image/*";
@@ -937,12 +951,19 @@
         photoCount.textContent = `${fotos.length}/${MAX_FOTOS} fotos`;
         photoCount.className =
           fotos.length === MAX_FOTOS
-            ? "rounded-full bg-green-50 px-2 py-1 text-[10px] font-bold text-green-700"
-            : "rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-700";
+            ? "rounded-full bg-green-50 px-2 py-1 text-[11px] font-bold text-green-700"
+            : "rounded-full bg-indigo-50 px-2 py-1 text-[11px] font-bold text-indigo-700";
       }
 
       function aplicarMascaraTelefone() {
         let numero = telefone.value.replace(/\D/g, "");
+        if (numero.length === 0) {
+          telefone.value = "";
+          validarTelefone();
+          atualizarProgresso();
+          return;
+        }
+        
         if (paisDDI.value === "+55") {
           numero = numero.slice(0, 11);
           if (numero.length > 10) {
@@ -1022,15 +1043,22 @@
 
       function validarTelefone() {
         const digitos = telefone.value.replace(/\D/g, "");
-        let valido =
-          paisDDI.value === "+55"
+        let valido = true;
+
+        if (digitos.length > 0) {
+          valido = paisDDI.value === "+55"
             ? digitos.length === 10 || digitos.length === 11
             : digitos.length === 9;
+        }
+
         telefone.classList.toggle("is-invalid", !valido && digitos.length > 0);
-        telefone.classList.toggle("is-valid", valido);
-        document.getElementById("statusTelefone").style.display = valido
-          ? "block"
-          : "none";
+        telefone.classList.toggle("is-valid", valido && digitos.length > 0);
+        
+        const icone = document.getElementById("statusTelefone");
+        if (icone) {
+          icone.style.display = (valido && digitos.length > 0) ? "block" : "none";
+        }
+        
         return valido;
       }
 
@@ -1139,10 +1167,11 @@
             !os.dados.observacao ||
             os.fotos.length === 0
           ) {
-            console.warn(
-              "OS inválida encontrada no armazenamento. Ignorando...",
-            );
-            continue;
+            // Removida a obrigatoriedade do telefone na verificação de OS válida
+            if(!os.dados.valor || !os.dados.observacao || os.fotos.length === 0) {
+                console.warn("OS inválida encontrada no armazenamento. Ignorando...");
+                continue;
+            }
           }
           try {
             let urlsDasFotos = [];
@@ -1209,7 +1238,10 @@
         const valorNumerico = parseFloat(
           valor.value.replace(/[^\d,]/g, "").replace(",", "."),
         );
-        const telefoneCompleto = `${paisDDI.value} ${telefone.value.trim()}`;
+        
+        const telValor = telefone.value.trim();
+        const telefoneCompleto = telValor ? `${paisDDI.value} ${telValor}` : "SEM CONTATO";
+
         let nomeFinal =
           nome.value.trim() === ""
             ? "CONSUMIDOR"
@@ -1363,6 +1395,8 @@
               fotosHtml = `<span class="text-[10px] text-slate-400 italic">Sem fotos registradas.</span>`;
             }
 
+            const telefoneExibir = d.telefone && d.telefone.trim() !== "+55" && d.telefone.trim() !== "" ? d.telefone : "Sem contato";
+
             card.innerHTML = `
               <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
                 <span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">ID: ${os.id}</span>
@@ -1370,7 +1404,7 @@
               </div>
               <div class="text-[11px] text-slate-600 flex flex-col gap-0.5">
                 <div><strong>Cliente:</strong> ${d.nome}</div>
-                <div><strong>Telefone:</strong> ${d.telefone}</div>
+                <div><strong>Telefone:</strong> ${telefoneExibir}</div>
                 <div><strong>Valor:</strong> R$ ${Number(d.valor).toFixed(2).replace(".", ",")}</div>
                 <div><strong>Obs:</strong> ${d.observacao}</div>
               </div>
