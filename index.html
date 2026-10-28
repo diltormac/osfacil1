@@ -7,6 +7,8 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
     <meta name="theme-color" content="#172033" />
+    <!-- ADICIONADO PARA O MODO ESCURO -->
+    <meta name="color-scheme" content="light dark" />
     <title>OS Fácil - Pré-Cadastro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -106,9 +108,7 @@
         border: 1px solid #e6eaf0;
         border-radius: 12px;
         background: white;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
       }
       .form-card.has-error {
         border-color: #ef4444;
@@ -148,9 +148,7 @@
         color: #172033;
         font-size: 12px;
         outline: none;
-        transition:
-          border-color 0.15s,
-          box-shadow 0.15s;
+        transition: border-color 0.15s, box-shadow 0.15s;
       }
       .field:focus {
         border-color: #435edb;
@@ -250,9 +248,7 @@
         border: 1px dashed #c7cfdd;
         border-radius: 9px;
         background: #f7f9fc;
-        transition:
-          border-color 0.2s,
-          background 0.2s;
+        transition: border-color 0.2s, background 0.2s;
       }
       .photo-slot:hover {
         border-color: #435edb;
@@ -329,9 +325,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition:
-          background 0.15s,
-          transform 0.1s;
+        transition: background 0.15s, transform 0.1s;
       }
       .submit-button:active {
         background: #334bc0;
@@ -403,6 +397,48 @@
         }
         .field-label {
           font-size: 10px;
+        }
+      }
+
+      /* REGRAS PARA O MODO ESCURO AUTOMÁTICO */
+      @media (prefers-color-scheme: dark) {
+        body, .app, .app-main, .app-footer {
+          background-color: #0b0f17 !important;
+        }
+        .app-footer {
+          border-top-color: #1e293b !important;
+        }
+        .form-card, .photo-section {
+          background-color: #1e293b !important;
+          border-color: #334155 !important;
+        }
+        .field {
+          background-color: #0f172a !important;
+          color: #f8fafc !important;
+          border-color: #334155 !important;
+        }
+        .field::placeholder {
+          color: #64748b !important;
+        }
+        .field-label, .card-body h2, .field-hint {
+          color: #94a3b8 !important;
+        }
+        .photo-slot {
+          background-color: #0f172a !important;
+          border-color: #334155 !important;
+        }
+        #modalPesquisa > div {
+          background-color: #1e293b !important;
+        }
+        .bg-white {
+          background-color: #1e293b !important;
+          color: #f8fafc !important;
+        }
+        .bg-slate-50, .bg-slate-100 {
+          background-color: #0f172a !important;
+        }
+        .text-slate-600, .text-slate-800 {
+          color: #cbd5e1 !important;
         }
       }
     </style>
